@@ -15,34 +15,44 @@ GlobalWhileMouseDownEventHandler::~GlobalWhileMouseDownEventHandler()
 void GlobalWhileMouseDownEventHandler::StartListener()
 {
 	bool mouseDownOnElement = false;
+	bool mouseAlreadDown = false;
 	while (true)
 	{
 		Sleep(10);
 
-		if (GetAsyncKeyState(VK_LBUTTON) == 0)
+		if (sender->GetVisible() && sender->GetEnabled())
 		{
-			mouseDownOnElement = false;
-		}
-
-		// Get Mouse Position
-		POINT pos;
-		GetCursorPos(&pos);
-		ScreenToClient(sender->GetSourceWindow()->GetHWND(), &pos);
-
-		// If Mouse is Pressed
-		if ((GetAsyncKeyState(VK_LBUTTON) & 0x8000) && !mouseDownOnElement)
-		{
-
-			if (pos.x < sender->GetPosX() + sender->GetWidth() && pos.x > sender->GetPosX() &&
-				pos.y < sender->GetPosY() + sender->GetHeight() && pos.y > sender->GetPosY())
+			if (GetAsyncKeyState(VK_LBUTTON) == 0)
 			{
-				mouseDownOnElement = true;
+				mouseDownOnElement = false;
+				mouseAlreadDown = false;
 			}
-		}
 
-		if (mouseDownOnElement)
-		{
-			CallbackFunc(sender);
+			// Get Mouse Position
+			POINT pos;
+			GetCursorPos(&pos);
+			ScreenToClient(sender->GetSourceWindow()->GetHWND(), &pos);
+
+			// If Mouse is Pressed
+			if ((GetAsyncKeyState(VK_LBUTTON) & 0x8000) && !mouseDownOnElement && !mouseAlreadDown)
+			{
+
+				if (pos.x < sender->GetPosX() + sender->GetWidth() && pos.x > sender->GetPosX() &&
+					pos.y < sender->GetPosY() + sender->GetHeight() && pos.y > sender->GetPosY())
+				{
+					mouseDownOnElement = true;
+				}
+			}
+
+			if (mouseDownOnElement)
+			{
+				CallbackFunc(sender);
+			}
+
+			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+			{
+				mouseAlreadDown = true;
+			}
 		}
 	}
 }

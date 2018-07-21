@@ -9,3 +9,5 @@ Color* Color::Green = new Color(0, 255, 0, 255);
 Color* Color::Blue = new Color(0, 0, 255, 255);
 Color* Color::Cyan = new Color(0, 255, 255, 255);
 Color* Color::Brown = new Color(139, 69, 19, 255);
+Color* Color::Navy = new Color(0, 0, 32, 255);
+Color* Color::WineRed = new Color(72, 32, 38, 255);

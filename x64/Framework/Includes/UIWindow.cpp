@@ -72,8 +72,17 @@ void UIWindow::mcCreateWindow(const int width, const int height, LPCWSTR windowN
 	RECT rect = { 0, 0, width, height };
 	AdjustWindowRectEx(&rect, WS_OVERLAPPEDWINDOW, false, WS_EX_OVERLAPPEDWINDOW);
 
-	HWND hWnd = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, windowID.c_str(), windowName, WS_OVERLAPPEDWINDOW, 80, 80,
+	HWND hWnd = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, windowID.c_str(), windowName, WS_OVERLAPPEDWINDOW, startingLocationX, startingLocationY,
 		rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, NULL, 0);
+
+	if (borderless)
+	{
+		AdjustWindowRectEx(&rect, WS_POPUP, false, 0);
+		hWnd = CreateWindowEx(0, windowID.c_str(), windowName, WS_POPUP, startingLocationX, startingLocationY,
+			rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, NULL, 0);
+		SetWindowLongPtr(hWnd, GWL_STYLE, 0); // remove all window styles
+	}
+
 	if (!hWnd) { return; }
 
 	if (!this->resizable)
@@ -82,7 +91,7 @@ void UIWindow::mcCreateWindow(const int width, const int height, LPCWSTR windowN
 		DWORD dwStyle = GetWindowLong(hWnd, GWL_STYLE);
 		dwStyle &= ~(WS_MAXIMIZE | WS_SIZEBOX);
 		// set the window with style without titlebar and sizebox
-		SetWindowLong(hWnd, GWL_STYLE, dwStyle);
+		SetWindowLongPtr(hWnd, GWL_STYLE, dwStyle);
 	}
 
 	if (!graphics->Init(hWnd))
@@ -99,6 +108,31 @@ void UIWindow::Show()
 	ShowWindow(hWnd, SW_SHOW);
 }
 
+void UIWindow::Minimize()
+{
+	ShowWindow(hWnd, SW_MINIMIZE);
+}
+
+void UIWindow::Maximize()
+{
+	ShowWindow(hWnd, SW_MAXIMIZE);
+	RECT mainWindowRect;
+	int windowWidth, windowHeight;
+	GetWindowRect(hWnd, &mainWindowRect);
+	this->height = mainWindowRect.bottom - mainWindowRect.top;
+	this->width = mainWindowRect.right - mainWindowRect.left;
+}
+
+void UIWindow::Restore()
+{
+	ShowWindow(hWnd, SW_RESTORE);
+	RECT mainWindowRect;
+	int windowWidth, windowHeight;
+	GetWindowRect(hWnd, &mainWindowRect);
+	this->height = mainWindowRect.bottom - mainWindowRect.top;
+	this->width = mainWindowRect.right - mainWindowRect.left;
+}
+
 void UIWindow::Hide()
 {
 	ShowWindow(hWnd, SW_HIDE);
@@ -111,6 +145,11 @@ void UIWindow::Dispose()
 
 void UIWindow::Update()
 {
+	if (shouldCloseOperation)
+	{
+		this->Dispose();
+	}
+
 	// update cursor style
 	SetCursor(LoadCursor(NULL, Mouse::CurrentCursorStyle));
 
@@ -149,4 +188,15 @@ void UIWindow::Remove(UIElement* element)
 bool UIWindow::IsOpened()
 {
 	return GetMessage(&msg, 0, 0, 0);
+}
+
+void UIWindow::MovePosition(int x, int y)
+{
+	RECT mainWindowRect;
+	int windowWidth, windowHeight;
+	GetWindowRect(hWnd, &mainWindowRect);
+	windowHeight = mainWindowRect.bottom - mainWindowRect.top;
+	windowWidth = mainWindowRect.right - mainWindowRect.left;
+
+	MoveWindow(hWnd, x, y, mainWindowRect.right - mainWindowRect.left, mainWindowRect.bottom - mainWindowRect.top, TRUE);
 }

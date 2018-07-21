@@ -2,19 +2,19 @@
 #include "MouseClickEventHandler.h"
 #include "MouseHoverEventHandler.h"
 
-Color* originalColor;
+Color* hoverOffColor;
 
 void Mouse_HoverOn(UIElement* sender)
 {
 	UIButton* btn = static_cast<UIButton*>(sender);
-	originalColor = btn->GetColor();
-	btn->SetColor(new Color(70, 70, 70, btn->GetColor()->a));
+	hoverOffColor = btn->GetColor();
+	btn->SetColor(new Color(btn->GetHoverOnColor()->r, btn->GetHoverOnColor()->g, btn->GetHoverOnColor()->b, btn->GetColor()->a));
 }
 
 void Mouse_HoverOff(UIElement* sender)
 {
 	UIButton* btn = static_cast<UIButton*>(sender);
-	btn->SetColor(originalColor);
+	btn->SetColor(hoverOffColor);
 }
 
 // Default Constructor
@@ -150,3 +150,13 @@ void UIButton::SetMouseHoverEventHandler(callback_function funcOn, callback_func
 	this->MouseHoverHandler = new MouseHoverEventHandler(this, funcOn, funcOff);
 }
 
+void UIButton::SetColor(Color* color)
+{
+	this->color = color; 
+	this->normalAlpha = color->a;
+}
+
+Color* UIButton::GetHoverOnColor()
+{
+	return hoverOnColor;
+}

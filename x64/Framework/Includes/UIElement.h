@@ -34,6 +34,8 @@ public:
 	typedef void(*uiElement_global_callback_function)(UIElement*);
 	virtual void AddWhileMouseDownEventHandler(uiElement_global_callback_function callbackFunc);
 	virtual void AddMouseClickEventHandler(uiElement_global_callback_function callbackFunc);
+	virtual void AddHoverOnEventHandler(uiElement_global_callback_function callbackFunc);
+	virtual void AddHoverOffEventHandler(uiElement_global_callback_function callbackFunc);
 
 	void MakeTextAllignment(int allignment, DWRITE_TEXT_ALIGNMENT& textAllignment, DWRITE_PARAGRAPH_ALIGNMENT& paragraphAllignment)
 	{

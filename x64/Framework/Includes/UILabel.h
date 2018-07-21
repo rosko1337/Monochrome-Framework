@@ -104,13 +104,6 @@ private:
 	float Margins = 0.1f;
 	bool Filled = false;
 	bool Visible = true;
-
-	// Entire Label Border
-	D2D1_RECT_F LabelBorder;
-
-	// Text Border
-	D2D1_RECT_F TextBorder;
 };
-
 
 #endif

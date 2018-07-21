@@ -1,11 +1,9 @@
 #define WIN32_LEAN_AND_MEAN
-#include "UIWindow.h"
+#include "MCWindowManager.h"
 #include "Graphics.h"
 #include "EventHandler.h"
 #include "UIElement.h"
-#include "UIButton.h"
 #include "UICheckbox.h"
-#include "UILabel.h"
 #include "UISlider.h"
 #include "UICombobox.h"
 #include "MouseClickEventHandler.h"

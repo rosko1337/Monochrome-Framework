@@ -17,4 +17,6 @@ public:
 	static Color* Blue;
 	static Color* Cyan;
 	static Color* Brown;
+	static Color* Navy;
+	static Color* WineRed;
 };

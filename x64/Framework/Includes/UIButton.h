@@ -39,6 +39,7 @@ public:
 	float GetStroke() { return this->Stroke; }
 	float GetMargins() { return this->Margins; }
 	Color* GetColor() { return this->color; }
+	Color* GetHoverOnColor();
 	Color* GetTextColor() { return this->textColor; }
 	bool GetFilled() { return this->Filled; }
 	bool GetVisible() { return this->Visible; }
@@ -53,7 +54,9 @@ public:
 	void SetTextAllignment(int alligment) { this->TextAllignment = alligment; }
 	void SetFontSize(int size) { this->FontSize = size; }
 	void SetPosition(float x, float y) { this->xPos = x; this->yPos = y; }
-	void SetColor(Color* color) { this->color = color; this->normalAlpha = color->a; }
+	void SetColor(Color* color);
+	void SetBorderColor(Color* color) { this->borderColor = color; }
+	void SetHoverOnColor(Color* color) { this->hoverOnColor = color; }
 	void SetTextColor(Color* color) { this->textColor = color; }
 	void SetStroke(float stroke) { this->Stroke = stroke; }
 	void SetMargins(float size) { this->Margins = size; }
@@ -128,6 +131,7 @@ private:
 	Color* color = new Color(140, 140, 140, 255);
 	uint8_t normalAlpha = color->a;
 	Color* textColor = Color::Black;
+	Color* hoverOnColor = Color::DarkGray;
 	Color* borderColor = new Color(40, 40, 40, 255);
 	float borderStroke = 2.0f;
 	float Stroke = 1.0f;
@@ -137,12 +141,6 @@ private:
 	bool Enabled = true;
 	bool RoundedCorners = true;
 	float roundCornerRadiusX = 4, roundCornerRadiusY = 4;
-
-	// Entire Label Border
-	D2D1_RECT_F LabelBorder;
-
-	// Text Border
-	D2D1_RECT_F TextBorder;
 
 	// Event Handlers
 	EventHandler* MouseHoverHandler;
