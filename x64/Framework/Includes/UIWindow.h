@@ -49,6 +49,7 @@ public:
 
 	void NotifyCloseOperation() { shouldCloseOperation = true; }
 	MSG& GetSystemMessage() { return this->msg; }
+	void SetWindowIcon(LPCWSTR filepath);
 
 	void SetMenuBar(UIMenuBar* menuBar);
 	void AddMenuItemCallback(int menuItemID, menu_item_callback_function callback);

@@ -237,3 +237,9 @@ void UIWindow::AddMenuItemCallback(int menuItemID, menu_item_callback_function n
 		menuItemCallbacks.insert(newPair);
 	}
 }
+
+void UIWindow::SetWindowIcon(LPCWSTR filepath)
+{
+	HANDLE icon = LoadImage(NULL, filepath, IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
+	SendMessage(hWnd, (UINT)WM_SETICON, ICON_BIG, (LPARAM)icon);
+}
