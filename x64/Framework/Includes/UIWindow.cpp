@@ -156,6 +156,17 @@ void UIWindow::Update()
 	graphics->BeginDraw();
 	graphics->ClearScreen(r, g, b);
 
+	for (const auto& pair : menuItemCallbacks)
+	{
+		if (msg.message == WM_COMMAND)
+		{
+			if (msg.wParam == pair.first)
+			{
+				pair.second(this);
+			}
+		}
+	}
+
 	// UI Elements
 	for (int i = 0; i < elements.size(); i++)
 	{
@@ -199,4 +210,30 @@ void UIWindow::MovePosition(int x, int y)
 	windowWidth = mainWindowRect.right - mainWindowRect.left;
 
 	MoveWindow(hWnd, x, y, mainWindowRect.right - mainWindowRect.left, mainWindowRect.bottom - mainWindowRect.top, TRUE);
+}
+
+void UIWindow::SetMenuBar(UIMenuBar* menuBar)
+{
+	HMENU windowMenuToolBar = CreateMenu();
+	for (int i = 0; i < menuBar->GetMenuList().size(); i++)
+	{
+		AppendMenuW(windowMenuToolBar, MF_POPUP, (UINT_PTR)menuBar->GetMenuList().at(i)->GetHMenu(), menuBar->GetMenuList().at(i)->GetName().c_str());
+	}
+	SetMenu(hWnd, windowMenuToolBar);
+}
+
+void UIWindow::AddMenuItemCallback(int menuItemID, menu_item_callback_function newCallback)
+{
+	if (menuItemCallbacks.find(menuItemID) != menuItemCallbacks.end())
+	{
+		// if a key exists already
+		menu_item_callback_function& callbackFunction = menuItemCallbacks.at(menuItemID);
+		callbackFunction = newCallback;
+	}
+	else
+	{
+		// create a new key and insert it into the map
+		std::pair<int, menu_item_callback_function> newPair = std::pair<int, menu_item_callback_function>(menuItemID, newCallback);
+		menuItemCallbacks.insert(newPair);
+	}
 }

@@ -4,8 +4,12 @@
 #include "Graphics.h"
 #include <Windows.h>
 #include <vector>
+#include <map>
 #include <string>
 #include "Color.h"
+#include "UIMenuBar.h"
+
+class UIMenu;
 
 class UIElement;
 
@@ -28,6 +32,7 @@ public:
 
 	HWND GetHWND() { return this->hWnd; }
 	Graphics* GetGraphics() { return this->graphics; }
+	typedef void(*menu_item_callback_function)(UIWindow*);
 
 	void Add(UIElement* element);
 	void Remove(UIElement* element);
@@ -41,7 +46,12 @@ public:
 	void SetBorderless(bool state) { this->borderless = state; }
 	void SetWindowLocation(int x, int y) { startingLocationX = x; startingLocationY = y; }
 	void MovePosition(int x, int y);
+
 	void NotifyCloseOperation() { shouldCloseOperation = true; }
+	MSG& GetSystemMessage() { return this->msg; }
+
+	void SetMenuBar(UIMenuBar* menuBar);
+	void AddMenuItemCallback(int menuItemID, menu_item_callback_function callback);
 
 	~UIWindow();
 private:
@@ -54,6 +64,7 @@ private:
 	std::vector<UIElement*> elements;
 	MSG msg;
 	bool shouldCloseOperation = false;
+	std::map<int, menu_item_callback_function> menuItemCallbacks;
 };
 
 #endif // !UIWINDOW_H

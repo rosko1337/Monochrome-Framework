@@ -3,6 +3,7 @@
 #include "Graphics.h"
 #include "EventHandler.h"
 #include "UIElement.h"
+#include "UIMenu.h"
 #include "UICheckbox.h"
 #include "UISlider.h"
 #include "UICombobox.h"
