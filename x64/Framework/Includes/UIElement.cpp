@@ -1,6 +1,7 @@
 #include "UIElement.h"
 #include "GlobalWhileMouseDownEventHandler.h"
 #include "MouseClickEventHandler.h"
+#include "GlobalRightMouseClickEventHandler.h"
 #include "GlobalHoverOnEventHandler.h"
 #include "GlobalHoverOffEventHandler.h"
 
@@ -22,4 +23,9 @@ void UIElement::AddHoverOnEventHandler(uiElement_global_callback_function callba
 void UIElement::AddHoverOffEventHandler(uiElement_global_callback_function callbackFunc)
 {
 	new GlobalHoverOffEventHandler(this, callbackFunc);
+}
+
+void UIElement::AddRightMouseClickEventHandler(uiElement_global_callback_function callbackFunc)
+{
+	new GlobalRightMouseClickEventHandler(this, callbackFunc);
 }
