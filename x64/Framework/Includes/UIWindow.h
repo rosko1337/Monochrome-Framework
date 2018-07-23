@@ -32,7 +32,7 @@ public:
 
 	HWND GetHWND() { return this->hWnd; }
 	Graphics* GetGraphics() { return this->graphics; }
-	typedef void(*menu_item_callback_function)(UIWindow*);
+	typedef void(*menu_item_callback_function)(UIWindow*, int);
 
 	void Add(UIElement* element);
 	void Remove(UIElement* element);

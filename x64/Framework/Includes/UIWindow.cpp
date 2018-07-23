@@ -162,7 +162,7 @@ void UIWindow::Update()
 		{
 			if (msg.wParam == pair.first)
 			{
-				pair.second(this);
+				pair.second(this, pair.first);
 			}
 		}
 	}
