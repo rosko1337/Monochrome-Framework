@@ -39,6 +39,7 @@ public:
 
 	int GetWidth() { return this->width; }
 	int GetHeight() { return this->height; }
+	int GetWindowID() { return this->windowID; }
 
 	void SetResizable(bool state) { this->resizable = state; }
 	void SetBackgroundColor(Color* color) { this->r = color->r; this->g = color->g; this->b = color->b; }
@@ -58,6 +59,7 @@ public:
 private:
 	HWND hWnd;
 	Graphics* graphics;
+	int windowID = 0;
 	bool resizable = true;
 	bool borderless = false;
 	int width = 0, height = 0;

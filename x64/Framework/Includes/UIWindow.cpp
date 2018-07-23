@@ -3,7 +3,8 @@
 #include "Mouse.h"
 
 int windowNum = 0;
-Graphics* graphicsReference;
+int currentWindowIndex = 0;
+std::vector<Graphics*> graphicsReferences;
 
 LRESULT CALLBACK windowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -12,7 +13,7 @@ LRESULT CALLBACK windowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		RECT newSize;
 		GetClientRect(hwnd, &newSize);
-		graphicsReference->ResizeRenderTarget(newSize.right - newSize.left, newSize.bottom - newSize.top);
+		graphicsReferences.at(currentWindowIndex)->ResizeRenderTarget(newSize.right - newSize.left, newSize.bottom - newSize.top);
 	}
 
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
@@ -25,7 +26,7 @@ LRESULT CALLBACK childWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 	{
 		RECT newSize;
 		GetClientRect(hwnd, &newSize);
-		graphicsReference->ResizeRenderTarget(newSize.right - newSize.left, newSize.bottom - newSize.top);
+		graphicsReferences.at(currentWindowIndex)->ResizeRenderTarget(newSize.right - newSize.left, newSize.bottom - newSize.top);
 	}
 
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
@@ -34,7 +35,7 @@ LRESULT CALLBACK childWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 UIWindow::UIWindow()
 {
 	this->graphics = new Graphics();
-	graphicsReference = this->graphics;
+	graphicsReferences.push_back(graphics);
 }
 
 UIWindow::~UIWindow()
@@ -49,6 +50,7 @@ void UIWindow::mcCreateWindow(const int width, const int height, LPCWSTR windowN
 
 	std::wstring windowID = L"Window";
 	windowID.append(std::to_wstring(windowNum));
+	this->windowID = windowNum;
 	windowNum++;
 
 	WNDCLASSEX window;
@@ -105,6 +107,7 @@ void UIWindow::mcCreateWindow(const int width, const int height, LPCWSTR windowN
 
 void UIWindow::Show()
 {
+	currentWindowIndex = this->windowID;
 	ShowWindow(hWnd, SW_SHOW);
 }
 
@@ -156,6 +159,13 @@ void UIWindow::Update()
 	graphics->BeginDraw();
 	graphics->ClearScreen(r, g, b);
 
+	if (this->hWnd == GetFocus())
+	{
+		// set current window index to current window
+		currentWindowIndex = this->windowID;
+	}
+
+	// menu item callbacks
 	for (const auto& pair : menuItemCallbacks)
 	{
 		if (msg.message == WM_COMMAND)
