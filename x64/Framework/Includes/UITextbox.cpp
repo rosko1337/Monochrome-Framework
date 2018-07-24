@@ -1,5 +1,6 @@
 #include "UITextbox.h"
 #include "UITextboxStateHandler.h"
+#include "TextboxTextChangedEventHandler.h"
 
 UITextbox::UITextbox(UIWindow* srcWindow)
 {
@@ -145,4 +146,9 @@ void UITextbox::UndoTextAction()
 		this->Text = previousText.at(previousText.size() - 1);
 		this->previousText.erase(previousText.begin() + previousText.size() - 1);
 	}
+}
+
+void UITextbox::AddTextChangedEventHandler(uiElement_global_callback_function callback)
+{
+	new TextboxTextChangedEventHandler(this, callback);
 }

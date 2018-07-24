@@ -55,6 +55,7 @@ public:
 	void SetStroke(float stroke) { this->Stroke = stroke; }
 	void SetBorderStroke(float stroke) { this->BorderStroke = stroke; }
 	void SetVisible(bool state) { this->Visible = state; }
+	void AddTextChangedEventHandler(uiElement_global_callback_function callback);
 	void SetEnabled(bool state) 
 	{
 		this->Enabled = state;
