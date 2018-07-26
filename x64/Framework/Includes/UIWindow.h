@@ -8,6 +8,7 @@
 #include <string>
 #include "Color.h"
 #include "UIMenuBar.h"
+#include "FTWindow.h"
 
 class UIMenu;
 
@@ -30,10 +31,10 @@ public:
 
 	uint8_t r = 120, g = 120, b = 120;
 
-	HWND GetHWND() { return this->hWnd; }
+	HWND GetHWND() { return this->ftWindow->hWnd; }
 	Graphics* GetGraphics() { return this->graphics; }
 	typedef void(*menu_item_callback_function)(UIWindow*, int);
-
+	
 	void Add(UIElement* element);
 	void Remove(UIElement* element);
 
@@ -45,7 +46,6 @@ public:
 	void SetBackgroundColor(Color* color) { this->r = color->r; this->g = color->g; this->b = color->b; }
 
 	void SetBorderless(bool state) { this->borderless = state; }
-	void SetWindowLocation(int x, int y) { startingLocationX = x; startingLocationY = y; }
 	void MovePosition(int x, int y);
 
 	void NotifyCloseOperation() { shouldCloseOperation = true; }
@@ -57,13 +57,12 @@ public:
 
 	~UIWindow();
 private:
-	HWND hWnd;
+	FTWindow* ftWindow;
 	Graphics* graphics;
 	int windowID = 0;
 	bool resizable = true;
 	bool borderless = false;
 	int width = 0, height = 0;
-	int startingLocationX = 100, startingLocationY = 100;
 	std::vector<UIElement*> elements;
 	MSG msg;
 	bool shouldCloseOperation = false;

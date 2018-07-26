@@ -61,7 +61,6 @@ UIWindow* mcCreateModernWindow(int width, int height, LPCWSTR windowName)
 	UIWindow* window = new UIWindow();
 	window->SetResizable(false);
 	window->SetBorderless(true);
-	window->SetWindowLocation(200, 200);
 	window->SetBackgroundColor(Color::Navy);
 	window->mcCreateWindow(width, height, windowName);
 

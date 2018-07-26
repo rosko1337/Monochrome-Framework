@@ -40,7 +40,7 @@ UIWindow::UIWindow()
 
 UIWindow::~UIWindow()
 {
-
+	delete graphics;
 }
 
 void UIWindow::mcCreateWindow(const int width, const int height, LPCWSTR windowName)
@@ -52,98 +52,75 @@ void UIWindow::mcCreateWindow(const int width, const int height, LPCWSTR windowN
 	windowID.append(std::to_wstring(windowNum));
 	this->windowID = windowNum;
 	windowNum++;
+	
+	// Setting window flags and style
+	FTSetWindowFlags(FT_CLASSIC);
+	if (this->borderless)
+	{
+		FTSetWindowFlags(FT_BORDERLESS);
+	} 
+	if (!this->resizable)
+	{
+		FTSetWindowFlags(FT_CLASSIC | FT_NON_RESIZABLE);
+	}
 
-	WNDCLASSEX window;
-	ZeroMemory(&window, sizeof(WNDCLASSEX));
-	window.cbSize = sizeof(WNDCLASSEX);
-	window.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	// Window Proc
+	// Specifying window proc function and creating the window
 	if (windowNum > 1)
 	{
-		window.lpfnWndProc = childWindowProc;
+		this->ftWindow = FTCreateWindow(width, height, windowName, windowID.c_str(), (LRESULT CALLBACK)childWindowProc);
 	}
 	else
 	{
-		window.lpfnWndProc = windowProc;
+		this->ftWindow = FTCreateWindow(width, height, windowName, windowID.c_str(), (LRESULT CALLBACK)windowProc);
 	}
 
-	window.lpszClassName = windowID.c_str();
-	window.style = CS_HREDRAW | CS_VREDRAW;
-	RegisterClassEx(&window);
-
-	RECT rect = { 0, 0, width, height };
-	AdjustWindowRectEx(&rect, WS_OVERLAPPEDWINDOW, false, WS_EX_OVERLAPPEDWINDOW);
-
-	HWND hWnd = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, windowID.c_str(), windowName, WS_OVERLAPPEDWINDOW, startingLocationX, startingLocationY,
-		rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, NULL, 0);
-
-	if (borderless)
-	{
-		AdjustWindowRectEx(&rect, WS_POPUP, false, 0);
-		hWnd = CreateWindowEx(0, windowID.c_str(), windowName, WS_POPUP, startingLocationX, startingLocationY,
-			rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, NULL, 0);
-		SetWindowLongPtr(hWnd, GWL_STYLE, 0); // remove all window styles
-	}
-
-	if (!hWnd) { return; }
-
-	if (!this->resizable)
-	{
-		// get the styles and properties of your window
-		DWORD dwStyle = GetWindowLong(hWnd, GWL_STYLE);
-		dwStyle &= ~(WS_MAXIMIZE | WS_SIZEBOX);
-		// set the window with style without titlebar and sizebox
-		SetWindowLongPtr(hWnd, GWL_STYLE, dwStyle);
-	}
-
-	if (!graphics->Init(hWnd))
+	// Initializing Direct2D graphics
+	if (!graphics->Init(this->ftWindow->hWnd))
 	{
 		delete graphics;
 		return;
 	}
-
-	this->hWnd = hWnd;
 }
 
 void UIWindow::Show()
 {
 	currentWindowIndex = this->windowID;
-	ShowWindow(hWnd, SW_SHOW);
+	FTShowWindow(ftWindow);
 }
 
 void UIWindow::Minimize()
 {
-	ShowWindow(hWnd, SW_MINIMIZE);
+	ShowWindow(ftWindow->hWnd, SW_MINIMIZE);
 }
 
 void UIWindow::Maximize()
 {
-	ShowWindow(hWnd, SW_MAXIMIZE);
+	ShowWindow(ftWindow->hWnd, SW_MAXIMIZE);
 	RECT mainWindowRect;
 	int windowWidth, windowHeight;
-	GetWindowRect(hWnd, &mainWindowRect);
+	GetWindowRect(ftWindow->hWnd, &mainWindowRect);
 	this->height = mainWindowRect.bottom - mainWindowRect.top;
 	this->width = mainWindowRect.right - mainWindowRect.left;
 }
 
 void UIWindow::Restore()
 {
-	ShowWindow(hWnd, SW_RESTORE);
+	FTRestoreWindow(ftWindow);
 	RECT mainWindowRect;
 	int windowWidth, windowHeight;
-	GetWindowRect(hWnd, &mainWindowRect);
+	GetWindowRect(ftWindow->hWnd, &mainWindowRect);
 	this->height = mainWindowRect.bottom - mainWindowRect.top;
 	this->width = mainWindowRect.right - mainWindowRect.left;
 }
 
 void UIWindow::Hide()
 {
-	ShowWindow(hWnd, SW_HIDE);
+	FTHideWindow(ftWindow);
 }
 
 void UIWindow::Dispose()
 {
-	DestroyWindow(hWnd);
+	FTDestroyWindow(ftWindow);
 }
 
 void UIWindow::Update()
@@ -159,7 +136,7 @@ void UIWindow::Update()
 	graphics->BeginDraw();
 	graphics->ClearScreen(r, g, b);
 
-	if (this->hWnd == GetFocus())
+	if (this->ftWindow->hWnd == GetFocus())
 	{
 		// set current window index to current window
 		currentWindowIndex = this->windowID;
@@ -215,11 +192,11 @@ void UIWindow::MovePosition(int x, int y)
 {
 	RECT mainWindowRect;
 	int windowWidth, windowHeight;
-	GetWindowRect(hWnd, &mainWindowRect);
+	GetWindowRect(ftWindow->hWnd, &mainWindowRect);
 	windowHeight = mainWindowRect.bottom - mainWindowRect.top;
 	windowWidth = mainWindowRect.right - mainWindowRect.left;
 
-	MoveWindow(hWnd, x, y, mainWindowRect.right - mainWindowRect.left, mainWindowRect.bottom - mainWindowRect.top, TRUE);
+	MoveWindow(ftWindow->hWnd, x, y, mainWindowRect.right - mainWindowRect.left, mainWindowRect.bottom - mainWindowRect.top, TRUE);
 }
 
 void UIWindow::SetMenuBar(UIMenuBar* menuBar)
@@ -229,7 +206,7 @@ void UIWindow::SetMenuBar(UIMenuBar* menuBar)
 	{
 		AppendMenuW(windowMenuToolBar, MF_POPUP, (UINT_PTR)menuBar->GetMenuList().at(i)->GetHMenu(), menuBar->GetMenuList().at(i)->GetName().c_str());
 	}
-	SetMenu(hWnd, windowMenuToolBar);
+	SetMenu(ftWindow->hWnd, windowMenuToolBar);
 }
 
 void UIWindow::AddMenuItemCallback(int menuItemID, menu_item_callback_function newCallback)
@@ -251,5 +228,5 @@ void UIWindow::AddMenuItemCallback(int menuItemID, menu_item_callback_function n
 void UIWindow::SetWindowIcon(LPCWSTR filepath)
 {
 	HANDLE icon = LoadImage(NULL, filepath, IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
-	SendMessage(hWnd, (UINT)WM_SETICON, ICON_BIG, (LPARAM)icon);
+	SendMessage(ftWindow->hWnd, (UINT)WM_SETICON, ICON_BIG, (LPARAM)icon);
 }
