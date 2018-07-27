@@ -10,22 +10,22 @@ class UITextbox : public UIElement
 {
 public:
 	UITextbox(UIWindow* srcWindow);
-	UITextbox(UIWindow* srcWindow, std::wstring text);
-	UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName);
-	UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, float fontSize);
-	UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, float fontSize, float posX, float posY);
-	UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, float fontSize, float posX, float posY, float Width, float Height);
-	UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, float fontSize, float posX, float posY,
+	UITextbox(UIWindow* srcWindow, std::string text);
+	UITextbox(UIWindow* srcWindow, std::string text, std::string fontName);
+	UITextbox(UIWindow* srcWindow, std::string text, std::string fontName, float fontSize);
+	UITextbox(UIWindow* srcWindow, std::string text, std::string fontName, float fontSize, float posX, float posY);
+	UITextbox(UIWindow* srcWindow, std::string text, std::string fontName, float fontSize, float posX, float posY, float Width, float Height);
+	UITextbox(UIWindow* srcWindow, std::string text, std::string fontName, float fontSize, float posX, float posY,
 		float Width, float Height, Color* color);
-	UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, float fontSize, float posX, float posY,
+	UITextbox(UIWindow* srcWindow, std::string text, std::string fontName, float fontSize, float posX, float posY,
 		float Width, float Height, Color* color, float stroke);
 
 	void Draw();
 
 	// Getters
 	UIWindow* GetSourceWindow() { return this->srcWindow; }
-	std::wstring GetText() { return this->Text; }
-	std::wstring GetFontName() { return this->FontName; }
+	std::string GetText() { return this->Text; }
+	std::string GetFontName() { return this->FontName; }
 	float GetFontSize() { return this->FontSize; }
 	float GetPosX() { return this->xPos; }
 	float GetPosY() { return this->yPos; }
@@ -43,10 +43,10 @@ public:
 	Color* GetBorderColor() { return this->borderColor; }
 
 	// Setters
-	void SetText(std::wstring text) { this->previousText.push_back(Text); this->Text = text; }
-	void AddText(std::wstring text) { this->previousText.push_back(Text); this->Text += text; }
+	void SetText(std::string text) { this->previousText.push_back(Text); this->Text = text; }
+	void AddText(std::string text) { this->previousText.push_back(Text); this->Text += text; }
 	void RemoveCharacter(int index);
-	void SetFontName(std::wstring fontName) { this->Text = fontName; }
+	void SetFontName(std::string fontName) { this->Text = fontName; }
 	void SetFontSize(int size) { this->FontSize = (float)size; if (size > 40) this->FontSize = 40.0f; }
 	void SetPosition(float x, float y) { this->xPos = x; this->yPos = y; }
 	void SetColor(Color* color) { this->color = color; this->normalAlpha = color->a; }
@@ -134,12 +134,12 @@ public:
 private:
 	UIWindow* srcWindow;
 
-	std::wstring Text = std::wstring(L"");
-	std::vector<std::wstring> previousText = { Text };
+	std::string Text = std::string("");
+	std::vector<std::string> previousText = { Text };
 	int TextAllignment = TEXT_ALLIGNMENT_CENTER;
 	int displayStartIndex = 0;
 	int textLimit = 10;
-	std::wstring FontName = std::wstring(L"Arial");
+	std::string FontName = std::string("Arial");
 	float FontSize = 14;
 	float xPos = 40.0f, yPos = 40.0f, Width = 140.0f, Height = 40.0f;
 	Color* color = Color::White;

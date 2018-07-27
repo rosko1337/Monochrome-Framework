@@ -12,23 +12,23 @@ class UICheckbox : public UIElement
 {
 public:
 	UICheckbox(UIWindow* srcWindow);
-	UICheckbox(UIWindow* srcWindow, std::wstring text);
-	UICheckbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName);
-	UICheckbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, int FontSize);
-	UICheckbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, int FontSize, float xPos, float yPos, float size);
+	UICheckbox(UIWindow* srcWindow, std::string text);
+	UICheckbox(UIWindow* srcWindow, std::string text, std::string fontName);
+	UICheckbox(UIWindow* srcWindow, std::string text, std::string fontName, int FontSize);
+	UICheckbox(UIWindow* srcWindow, std::string text, std::string fontName, int FontSize, float xPos, float yPos, float size);
 
-	UICheckbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+	UICheckbox(UIWindow* srcWindow, std::string text, std::string fontName,
 		int FontSize, float xPos, float yPos, float size, float TextWidth, float TextHeight);
 
-	UICheckbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+	UICheckbox(UIWindow* srcWindow, std::string text, std::string fontName,
 		int FontSize, float xPos, float yPos, float size, float TextWidth, float TextHeight, float margins);
 
 	void Draw();
 
 	// Getters
 	UIWindow* GetSourceWindow() { return this->srcWindow; }
-	std::wstring GetText() { return this->Text; }
-	std::wstring GetFontName() { return this->FontName; }
+	std::string GetText() { return this->Text; }
+	std::string GetFontName() { return this->FontName; }
 	int GetFontSize() { return this->FontSize; }
 	float GetPosX() { return this->xPos; }
 	float GetPosY() { return this->yPos; }
@@ -48,8 +48,8 @@ public:
 	Color* GetTextColor() { return this->textColor; }
 
 	// Setters
-	void SetText(std::wstring text) { this->Text = text; }
-	void SetFontName(std::wstring fontName) { this->Text = fontName; }
+	void SetText(std::string text) { this->Text = text; }
+	void SetFontName(std::string fontName) { this->Text = fontName; }
 	void SetTextAllignment(int alligment) { this->TextAllignment = alligment; }
 	void SetFontSize(int size) { this->FontSize = size; }
 	void SetPosition(float x, float y) { this->xPos = x; this->yPos = y; }
@@ -121,8 +121,8 @@ public:
 
 private:
 	UIWindow* srcWindow;
-	std::wstring Text = std::wstring(L"Checkbox");
-	std::wstring FontName = std::wstring(L"Arial");
+	std::string Text = std::string("Checkbox");
+	std::string FontName = std::string("Arial");
 	int TextAllignment = TEXT_ALLIGNMENT_CENTER;
 	int FontSize = 14;
 	float xPos = 40, yPos = 30, Size = 20, TextWidth = 100, TextHeight = 20;

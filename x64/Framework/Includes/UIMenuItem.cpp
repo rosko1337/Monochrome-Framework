@@ -1,6 +1,6 @@
 #include "UIMenuItem.h"
 
-UIMenuItem::UIMenuItem(std::wstring name, int itemID)
+UIMenuItem::UIMenuItem(std::string name, int itemID)
 {
 	this->id = itemID;
 	this->name = name;

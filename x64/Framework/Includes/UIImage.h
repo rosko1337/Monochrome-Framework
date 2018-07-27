@@ -5,9 +5,9 @@
 class UIImage : public UIElement
 {
 public:
-	UIImage(UIWindow* srcWindow, const wchar_t* imgFilepath);
-	UIImage(UIWindow* srcWindow, const wchar_t* imgFilepath, float xPos, float yPos);
-	UIImage(UIWindow* srcWindow, const wchar_t* imgFilepath, float xPos, float yPos, float width, float height);
+	UIImage(UIWindow* srcWindow, const char* imgFilepath);
+	UIImage(UIWindow* srcWindow, const char* imgFilepath, float xPos, float yPos);
+	UIImage(UIWindow* srcWindow, const char* imgFilepath, float xPos, float yPos, float width, float height);
 
 	void Draw();
 

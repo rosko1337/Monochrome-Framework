@@ -8,10 +8,10 @@ class UIWindow;
 class UIMenuItem
 {
 public:
-	UIMenuItem(std::wstring name, int itemID);
+	UIMenuItem(std::string name, int itemID);
 
 	HMENU& GetHMenu() { return this->hMenu; }
-	std::wstring GetName() { return this->name; }
+	std::string GetName() { return this->name; }
 	int GetID() { return this->id; }
 
 	~UIMenuItem();
@@ -19,6 +19,6 @@ public:
 private:
 	HMENU hMenu;
 	int id;
-	std::wstring name;
+	std::string name;
 };
 

@@ -1,6 +1,6 @@
 #include "UIImage.h"
 
-UIImage::UIImage(UIWindow* srcWindow, const wchar_t* imgFilepath)
+UIImage::UIImage(UIWindow* srcWindow, const char* imgFilepath)
 {
 	this->srcWindow = srcWindow;
 	this->bitmapImage = srcWindow->GetGraphics()->mcLoadImage(imgFilepath);
@@ -8,7 +8,7 @@ UIImage::UIImage(UIWindow* srcWindow, const wchar_t* imgFilepath)
 	this->Height = GetImageHeight();
 }
 
-UIImage::UIImage(UIWindow* srcWindow, const wchar_t* imgFilepath, float xPos, float yPos)
+UIImage::UIImage(UIWindow* srcWindow, const char* imgFilepath, float xPos, float yPos)
 {
 	this->srcWindow = srcWindow;
 	this->bitmapImage = srcWindow->GetGraphics()->mcLoadImage(imgFilepath);
@@ -18,7 +18,7 @@ UIImage::UIImage(UIWindow* srcWindow, const wchar_t* imgFilepath, float xPos, fl
 	this->yPos = yPos;
 }
 
-UIImage::UIImage(UIWindow* srcWindow, const wchar_t* imgFilepath, float xPos, float yPos, float width, float height)
+UIImage::UIImage(UIWindow* srcWindow, const char* imgFilepath, float xPos, float yPos, float width, float height)
 {
 	this->srcWindow = srcWindow;
 	this->bitmapImage = srcWindow->GetGraphics()->mcLoadImage(imgFilepath);

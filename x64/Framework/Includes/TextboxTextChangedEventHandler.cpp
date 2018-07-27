@@ -15,13 +15,13 @@ TextboxTextChangedEventHandler::~TextboxTextChangedEventHandler()
 void TextboxTextChangedEventHandler::StartListener()
 {
 	UITextbox* txtbox = static_cast<UITextbox*>(sender);
-	std::wstring oldText = txtbox->GetText();
+	std::string oldText = txtbox->GetText();
 	while (true)
 	{
 		Sleep(10);
 		if (sender->GetVisible() && sender->GetEnabled())
 		{
-			std::wstring newText = txtbox->GetText();
+			std::string newText = txtbox->GetText();
 
 			if (!newText._Equal(oldText))
 			{

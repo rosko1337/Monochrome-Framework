@@ -62,10 +62,11 @@ void UICombobox::Draw()
 			roundCornerRadiusX, roundCornerRadiusY, 128, 128, 128, 255, 1.0f, false); // Border Box
 	}
 
-	this->srcWindow->GetGraphics()->drawText(L"▼", L"Arial", 16, xPos + Width - 14.0f, yPos, 4.0f, Height - 0.6f, 
+	// "▼" | "⮛"
+	this->srcWindow->GetGraphics()->drawText(L"⮛", "Arial", 16, xPos + Width - 14.0f, yPos, 4.0f, Height - 0.6f,
 		0, 0, 0, 255, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER); // Arrow Key Down
 
-	this->srcWindow->GetGraphics()->drawText(Items.at(SelectedIndex), L"Arial", Height - 10, xPos + 2.0f, yPos, Width - 14.0f, Height, 
+	this->srcWindow->GetGraphics()->drawText(Items.at(SelectedIndex), "Arial", Height - 10, xPos + 2.0f, yPos, Width - 14.0f, Height, 
 		0, 0, 0, 255, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER); // Actual Text
 
 	if (this->drawItems)
@@ -97,7 +98,7 @@ void UICombobox::Draw()
 				DWRITE_PARAGRAPH_ALIGNMENT paragraphAllignment;
 				MakeTextAllignment(this->TextAllignment, textAllignment, paragraphAllignment);
 
-				this->srcWindow->GetGraphics()->drawText(Items.at(i), L"Arial", Height - 10, xPos + 2.0f, y, w, Height, 
+				this->srcWindow->GetGraphics()->drawText(Items.at(i), "Arial", Height - 10, xPos + 2.0f, y, w, Height, 
 					textRed, textGreen, textBlue, 255, textAllignment, paragraphAllignment);
 			}
 		}
@@ -132,7 +133,7 @@ void UICombobox::RemoveItem(int index)
 	}
 }
 
-void UICombobox::RemoveItem(std::wstring item)
+void UICombobox::RemoveItem(std::string item)
 {
 	if (std::find(this->Items.begin(), this->Items.end(), item) != this->Items.end())
 	{
@@ -140,7 +141,7 @@ void UICombobox::RemoveItem(std::wstring item)
 	}
 }
 
-int UICombobox::IndexOf(std::wstring item)
+int UICombobox::IndexOf(std::string item)
 {
 	for (int i = 0; i < this->Items.size(); i++)
 	{

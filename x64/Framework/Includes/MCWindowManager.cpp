@@ -56,7 +56,7 @@ void WindowDragPanel_WhileMouseDown(UIElement* sender)
 	sender->GetSourceWindow()->MovePosition(currentMousePos.x - lastMousePos.x, currentMousePos.y - lastMousePos.y);
 }
 
-UIWindow* mcCreateModernWindow(int width, int height, LPCWSTR windowName)
+UIWindow* mcCreateModernWindow(int width, int height, const char* windowName)
 {
 	UIWindow* window = new UIWindow();
 	window->SetResizable(false);
@@ -65,7 +65,7 @@ UIWindow* mcCreateModernWindow(int width, int height, LPCWSTR windowName)
 	window->mcCreateWindow(width, height, windowName);
 
 	// Close Button
-	CloseWindowButton = new UIButton(window, L"X", L"Palatino", 14);
+	CloseWindowButton = new UIButton(window, "X", "Palatino", 14);
 	CloseWindowButton->SetPosition(window->GetWidth() - 14, 0);
 	CloseWindowButton->SetStroke(0);
 	CloseWindowButton->SetWidth(34);
@@ -78,7 +78,7 @@ UIWindow* mcCreateModernWindow(int width, int height, LPCWSTR windowName)
 	window->Add(CloseWindowButton);
 
 	// Maximize Button
-	MaximizeWindowButton = new UIButton(window, L"☐", L"Palatino", 14);
+	MaximizeWindowButton = new UIButton(window, "☐", "Palatino", 14);
 	MaximizeWindowButton->SetPosition(window->GetWidth() - 47, 0);
 	MaximizeWindowButton->SetStroke(0);
 	MaximizeWindowButton->SetWidth(34);
@@ -91,7 +91,7 @@ UIWindow* mcCreateModernWindow(int width, int height, LPCWSTR windowName)
 	window->Add(MaximizeWindowButton);
 
 	// Maximize Minimize
-	MinimizeWindowButton = new UIButton(window, L"__", L"Palatino", 14);
+	MinimizeWindowButton = new UIButton(window, "__", "Palatino", 14);
 	MinimizeWindowButton->SetPosition(window->GetWidth() - 80, 0);
 	MinimizeWindowButton->SetStroke(0);
 	MinimizeWindowButton->SetWidth(34);
@@ -103,12 +103,12 @@ UIWindow* mcCreateModernWindow(int width, int height, LPCWSTR windowName)
 	MinimizeWindowButton->AddMouseClickEventHandler(MinimizeWindowOperation);
 	window->Add(MinimizeWindowButton);
 
-	WindowDragPanel = new UILabel(window, L"", L"Verdana", 1, 0, 0, window->GetWidth() - 30, 32, new Color(0, 0, 0, 0), 0);
+	WindowDragPanel = new UILabel(window, "", "Verdana", 1, 0, 0, window->GetWidth() - 30, 32, new Color(0, 0, 0, 0), 0);
 	WindowDragPanel->AddWhileMouseDownEventHandler(WindowDragPanel_WhileMouseDown);
 	WindowDragPanel->AddMouseClickEventHandler(WindowDragPanel_OnClick);
 	window->Add(WindowDragPanel);
 
-	UILabel* WindowTitle = new UILabel(window, windowName, L"Verdana", 14, 24, 0, wcslen(windowName) * 14, 32, Color::White, 0);
+	UILabel* WindowTitle = new UILabel(window, windowName, "Verdana", 14, 24, 0, strlen(windowName) * 14, 32, Color::White, 0);
 	WindowTitle->SetTextColor(Color::White);
 	WindowTitle->SetTextAllignment(TEXT_ALLIGNMENT_LEFT);
 	window->Add(WindowTitle);

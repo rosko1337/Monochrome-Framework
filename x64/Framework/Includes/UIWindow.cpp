@@ -43,7 +43,7 @@ UIWindow::~UIWindow()
 	delete graphics;
 }
 
-void UIWindow::mcCreateWindow(const int width, const int height, LPCWSTR windowName)
+void UIWindow::mcCreateWindow(const int width, const int height, const char* windowName)
 {
 	this->width = width;
 	this->height = height;
@@ -67,11 +67,13 @@ void UIWindow::mcCreateWindow(const int width, const int height, LPCWSTR windowN
 	// Specifying window proc function and creating the window
 	if (windowNum > 1)
 	{
-		this->ftWindow = FTCreateWindow(width, height, windowName, windowID.c_str(), (LRESULT CALLBACK)childWindowProc);
+		std::string windowNameAsString(windowName);
+		this->ftWindow = FTCreateWindow(width, height, std::wstring(windowNameAsString.begin(), windowNameAsString.end()).c_str(), windowID.c_str(), (LRESULT CALLBACK)childWindowProc);
 	}
 	else
 	{
-		this->ftWindow = FTCreateWindow(width, height, windowName, windowID.c_str(), (LRESULT CALLBACK)windowProc);
+		std::string windowNameAsString(windowName);
+		this->ftWindow = FTCreateWindow(width, height, std::wstring(windowNameAsString.begin(), windowNameAsString.end()).c_str(), windowID.c_str(), (LRESULT CALLBACK)windowProc);
 	}
 
 	// Initializing Direct2D graphics
@@ -204,7 +206,7 @@ void UIWindow::SetMenuBar(UIMenuBar* menuBar)
 	HMENU windowMenuToolBar = CreateMenu();
 	for (int i = 0; i < menuBar->GetMenuList().size(); i++)
 	{
-		AppendMenuW(windowMenuToolBar, MF_POPUP, (UINT_PTR)menuBar->GetMenuList().at(i)->GetHMenu(), menuBar->GetMenuList().at(i)->GetName().c_str());
+		AppendMenuA(windowMenuToolBar, MF_POPUP, (UINT_PTR)menuBar->GetMenuList().at(i)->GetHMenu(), menuBar->GetMenuList().at(i)->GetName().c_str());
 	}
 	SetMenu(ftWindow->hWnd, windowMenuToolBar);
 }
@@ -225,8 +227,8 @@ void UIWindow::AddMenuItemCallback(int menuItemID, menu_item_callback_function n
 	}
 }
 
-void UIWindow::SetWindowIcon(LPCWSTR filepath)
+void UIWindow::SetWindowIcon(const char* filepath)
 {
-	HANDLE icon = LoadImage(NULL, filepath, IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
+	HANDLE icon = LoadImageA(NULL, filepath, IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
 	SendMessage(ftWindow->hWnd, (UINT)WM_SETICON, ICON_BIG, (LPARAM)icon);
 }

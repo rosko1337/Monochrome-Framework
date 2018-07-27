@@ -8,14 +8,14 @@ UITextbox::UITextbox(UIWindow* srcWindow)
 	SetTextboxStateHandler();
 }
 
-UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text)
+UITextbox::UITextbox(UIWindow* srcWindow, std::string text)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
 	SetTextboxStateHandler();
 }
 
-UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName)
+UITextbox::UITextbox(UIWindow* srcWindow, std::string text, std::string fontName)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
@@ -23,7 +23,7 @@ UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontNa
 	SetTextboxStateHandler();
 }
 
-UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, float fontSize)
+UITextbox::UITextbox(UIWindow* srcWindow, std::string text, std::string fontName, float fontSize)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
@@ -32,7 +32,7 @@ UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontNa
 	SetTextboxStateHandler();
 }
 
-UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, float fontSize, float posX, float posY)
+UITextbox::UITextbox(UIWindow* srcWindow, std::string text, std::string fontName, float fontSize, float posX, float posY)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
@@ -43,7 +43,7 @@ UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontNa
 	SetTextboxStateHandler();
 }
 
-UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, float fontSize, float posX, float posY, float Width, float Height)
+UITextbox::UITextbox(UIWindow* srcWindow, std::string text, std::string fontName, float fontSize, float posX, float posY, float Width, float Height)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
@@ -56,7 +56,7 @@ UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontNa
 	SetTextboxStateHandler();
 }
 
-UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, float fontSize, float posX, float posY,
+UITextbox::UITextbox(UIWindow* srcWindow, std::string text, std::string fontName, float fontSize, float posX, float posY,
 	float Width, float Height, Color* color)
 {
 	this->srcWindow = srcWindow;
@@ -72,7 +72,7 @@ UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontNa
 	SetTextboxStateHandler();
 }
 
-UITextbox::UITextbox(UIWindow* srcWindow, std::wstring text, std::wstring fontName, float fontSize, float posX, float posY,
+UITextbox::UITextbox(UIWindow* srcWindow, std::string text, std::string fontName, float fontSize, float posX, float posY,
 	float Width, float Height, Color* color, float stroke)
 {
 	this->srcWindow = srcWindow;
@@ -100,7 +100,7 @@ void UITextbox::Draw()
 	this->srcWindow->GetGraphics()->DrawRectangle(xPos - 0.2f, yPos - 0.2f, Width + 0.2f, Height + 0.2f,
 		borderColor->r, borderColor->g, borderColor->b, borderColor->a, BorderStroke, false); // Bounding box.
 
-	std::wstring txt = Text;
+	std::string txt = Text;
 	if (txt.size() > textLimit)
 	{
 		txt.erase(txt.begin(), txt.begin()+displayStartIndex);
@@ -120,7 +120,7 @@ void UITextbox::Draw()
 	DWRITE_PARAGRAPH_ALIGNMENT paragraphAllignment;
 	MakeTextAllignment(this->TextAllignment, textAllignment, paragraphAllignment);
 
-	this->srcWindow->GetGraphics()->drawText(std::wstring(txt), FontName, FontSize,
+	this->srcWindow->GetGraphics()->drawText(txt, FontName, FontSize,
 		xPos + 0.2f, yPos + 0.2f, Width - 0.2f, Height - 0.2f, textColor->r, textColor->g, textColor->b, textColor->a,
 		textAllignment, paragraphAllignment); // Text.
 }

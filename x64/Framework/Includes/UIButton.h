@@ -12,25 +12,25 @@ class UIButton : public UIElement
 {
 public:
 	UIButton(UIWindow* srcWindow);
-	UIButton(UIWindow* srcWindow, std::wstring text);
-	UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName);
-	UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName, int FontSize);
-	UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName, int FontSize, float xPos, float yPos, float Width, float Height);
-	UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+	UIButton(UIWindow* srcWindow, std::string text);
+	UIButton(UIWindow* srcWindow, std::string text, std::string fontName);
+	UIButton(UIWindow* srcWindow, std::string text, std::string fontName, int FontSize);
+	UIButton(UIWindow* srcWindow, std::string text, std::string fontName, int FontSize, float xPos, float yPos, float Width, float Height);
+	UIButton(UIWindow* srcWindow, std::string text, std::string fontName,
 		int FontSize, float xPos, float yPos, float Width, float Height, Color* color);
 
-	UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+	UIButton(UIWindow* srcWindow, std::string text, std::string fontName,
 		int FontSize, float xPos, float yPos, float Width, float Height, Color* color, float stroke);
 
-	UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+	UIButton(UIWindow* srcWindow, std::string text, std::string fontName,
 		int FontSize, float xPos, float yPos, float Width, float Height, Color* color, float stroke, float margins);
 
 	void Draw();
 
 	// Getters
 	UIWindow* GetSourceWindow() { return this->srcWindow; }
-	std::wstring GetText() { return this->Text; }
-	std::wstring GetFontName() { return this->FontName; }
+	std::string GetText() { return this->Text; }
+	std::string GetFontName() { return this->FontName; }
 	int GetFontSize() { return this->FontSize; }
 	float GetPosX() { return this->xPos; }
 	float GetPosY() { return this->yPos; }
@@ -49,8 +49,8 @@ public:
 	float GetRoundCornersRadiusY() { return this->roundCornerRadiusY; }
 
 	// Setters
-	void SetText(std::wstring text) { this->Text = text; }
-	void SetFontName(std::wstring fontName) { this->Text = fontName; }
+	void SetText(std::string text) { this->Text = text; }
+	void SetFontName(std::string fontName) { this->Text = fontName; }
 	void SetTextAllignment(int alligment) { this->TextAllignment = alligment; }
 	void SetFontSize(int size) { this->FontSize = size; }
 	void SetPosition(float x, float y) { this->xPos = x; this->yPos = y; }
@@ -123,8 +123,8 @@ public:
 
 private:
 	UIWindow* srcWindow;
-	std::wstring Text = std::wstring(L"Button");
-	std::wstring FontName = std::wstring(L"Arial");
+	std::string Text = std::string("Button");
+	std::string FontName = std::string("Arial");
 	int TextAllignment = TEXT_ALLIGNMENT_CENTER;
 	int FontSize = 14;
 	float xPos = 10, yPos = 20, Width = 100, Height = 40;

@@ -5,10 +5,10 @@
 class UIMenu
 {
 public:
-	UIMenu(std::wstring name);
+	UIMenu(std::string name);
 
 	HMENU& GetHMenu() { return this->hMenu; }
-	std::wstring GetName() { return this->name; }
+	std::string GetName() { return this->name; }
 
 	void AddMenu(UIMenu* menu);
 	void AddSeparator();
@@ -18,6 +18,6 @@ public:
 
 private:
 	HMENU hMenu;
-	std::wstring name;
+	std::string name;
 };
 

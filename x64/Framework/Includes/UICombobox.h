@@ -29,7 +29,7 @@ public:
 	bool GetVisible() { return this->Visible; }
 	bool GetEnabled() { return this->Enabled; }
 	bool GetDrawItems() { return drawItems; }
-	std::vector<std::wstring> GetItems() { return this->Items; }
+	std::vector<std::string> GetItems() { return this->Items; }
 	int GetSelectedIndex() { return this->SelectedIndex; }
 	int GetHoverIndex() { return this->hoverIndex; }
 	bool GetRoundedCorners() { return this->RoundedCorners; }
@@ -55,7 +55,7 @@ public:
 		}
 	}
 	void SetColor(Color* color) { this->color = color; }
-	void SetItems(std::vector<std::wstring> items) { this->Items = items; }
+	void SetItems(std::vector<std::string> items) { this->Items = items; }
 	void SetDrawItems(bool state) { this->drawItems = state; }
 	void SetSelectedIndex(int index) { this->SelectedIndex = index; }
 	void SetHoverIndex(int index) { this->hoverIndex = index; }
@@ -93,10 +93,10 @@ public:
 		t.detach();
 	}
 
-	void AddItem(std::wstring item) { this->Items.push_back(item); }
+	void AddItem(std::string item) { this->Items.push_back(item); }
 	void RemoveItem(int index);
-	void RemoveItem(std::wstring item);
-	int IndexOf(std::wstring item);
+	void RemoveItem(std::string item);
+	int IndexOf(std::string item);
 
 	typedef void(*callback_function)(UIElement* sender);
 	// Event Handler
@@ -111,7 +111,7 @@ private:
 	Color* color = Color::White;
 	bool Visible = true;
 	bool Enabled = true;
-	std::vector<std::wstring> Items = { L" " };
+	std::vector<std::string> Items = { " " };
 	int TextAllignment = TEXT_ALLIGNMENT_CENTER;
 	int SelectedIndex = 0;
 	bool drawItems = false;

@@ -19,7 +19,7 @@ class UIWindow
 public:
 	UIWindow();
 
-	void mcCreateWindow(const int width, const int height, LPCWSTR windowName);
+	void mcCreateWindow(const int width, const int height, const char* windowName);
 	void Show();
 	void Maximize();
 	void Minimize();
@@ -50,7 +50,7 @@ public:
 
 	void NotifyCloseOperation() { shouldCloseOperation = true; }
 	MSG& GetSystemMessage() { return this->msg; }
-	void SetWindowIcon(LPCWSTR filepath);
+	void SetWindowIcon(const char* filepath);
 
 	void SetMenuBar(UIMenuBar* menuBar);
 	void AddMenuItemCallback(int menuItemID, menu_item_callback_function callback);

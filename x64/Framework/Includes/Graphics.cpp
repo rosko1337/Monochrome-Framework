@@ -106,8 +106,32 @@ void Graphics::DrawRoundedRectangle(float x, float y, float width, float height,
 	}
 }
 
-void Graphics::drawText(const std::wstring& text, std::wstring font, WCHAR fontSize, 
+void Graphics::drawText(const std::string text, std::string font, int fontSize, 
 	float xPos, float yPos, float width, float height, uint8_t r, uint8_t g, uint8_t b, uint8_t a, 
+	DWRITE_TEXT_ALIGNMENT textAllignment, DWRITE_PARAGRAPH_ALIGNMENT paragraphAllignment)
+{
+	float red = ConvertUI8ToFloat(r);
+	float green = ConvertUI8ToFloat(g);
+	float blue = ConvertUI8ToFloat(b);
+	float alpha = ConvertUI8ToFloat(a);
+	ID2D1SolidColorBrush* brush;
+	RenderTarget->CreateSolidColorBrush(D2D1::ColorF(red, green, blue, alpha), &brush);
+
+	IDWriteFactory* WriteFactory;
+	HRESULT h = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), (IUnknown**)&WriteFactory);
+	
+	IDWriteTextFormat* format;
+	h = WriteFactory->CreateTextFormat(std::wstring(font.begin(), font.end()).c_str(), NULL, DWRITE_FONT_WEIGHT_NORMAL,
+		DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, fontSize, L"", &format);
+
+	// Center the text horizontally and vertically.
+	format->SetTextAlignment(textAllignment);
+	format->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	RenderTarget->DrawTextW(std::wstring(text.begin(), text.end()).c_str(), std::wstring(text.begin(), text.end()).size(), format, D2D1::RectF(xPos, yPos, xPos+width, yPos+height), brush);
+}
+
+void  Graphics::drawText(const std::wstring text, std::string font, int fontSize,
+	float xPos, float yPos, float width, float height, uint8_t r, uint8_t g, uint8_t b, uint8_t a,
 	DWRITE_TEXT_ALIGNMENT textAllignment, DWRITE_PARAGRAPH_ALIGNMENT paragraphAllignment)
 {
 	float red = ConvertUI8ToFloat(r);
@@ -121,16 +145,14 @@ void Graphics::drawText(const std::wstring& text, std::wstring font, WCHAR fontS
 	HRESULT h = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), (IUnknown**)&WriteFactory);
 
 	IDWriteTextFormat* format;
-	h = WriteFactory->CreateTextFormat(font.c_str(), NULL, DWRITE_FONT_WEIGHT_NORMAL, 
+	h = WriteFactory->CreateTextFormat(std::wstring(font.begin(), font.end()).c_str(), NULL, DWRITE_FONT_WEIGHT_NORMAL,
 		DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, fontSize, L"", &format);
 
 	// Center the text horizontally and vertically.
 	format->SetTextAlignment(textAllignment);
 	format->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-
-	RenderTarget->DrawTextW(text.c_str(), text.size(), format, D2D1::RectF(xPos, yPos, xPos+width, yPos+height), brush);
+	RenderTarget->DrawTextW(text.c_str(), text.size(), format, D2D1::RectF(xPos, yPos, xPos + width, yPos + height), brush);
 }
-
 
 void Graphics::DrawArc(float startX, float startY, float endX, float endY, float size, 
 	D2D1_SWEEP_DIRECTION direction, D2D1_ARC_SIZE arcSize, uint8_t r, uint8_t g, uint8_t b, uint8_t a, float stroke)
@@ -178,7 +200,7 @@ void Graphics::ResizeRenderTarget(int width, int height)
 	}
 }
 
-ID2D1Bitmap* Graphics::mcLoadImage(const wchar_t* filepath)
+ID2D1Bitmap* Graphics::mcLoadImage(const char* filepath)
 {
 	HRESULT hr;
 	IWICImagingFactory* wicFactory = NULL;
@@ -189,7 +211,8 @@ ID2D1Bitmap* Graphics::mcLoadImage(const wchar_t* filepath)
 	}
 	
 	IWICBitmapDecoder* wicDecoder = NULL;
-	hr = wicFactory->CreateDecoderFromFilename(filepath, NULL, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &wicDecoder);
+	std::string filepathAsString(filepath);
+	hr = wicFactory->CreateDecoderFromFilename(std::wstring(filepathAsString.begin(), filepathAsString.end()).c_str(), NULL, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &wicDecoder);
 	if (hr != S_OK)
 	{
 		return NULL;

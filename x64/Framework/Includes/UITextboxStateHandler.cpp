@@ -23,7 +23,7 @@ void UITextboxStateHandler::StartListener()
 	/******************************************/
 	bool mousePressed = false;
 	bool ctrlPressed = false;
-	std::wstring oldText = srcTextBox->GetText();
+	std::string oldText = srcTextBox->GetText();
 	while (true)
 	{
 		float lim = CalculateVisibleTextLimit((int)srcTextBox->GetFontSize());
@@ -34,7 +34,7 @@ void UITextboxStateHandler::StartListener()
 
 			bool textChanged = false;
 			// Text Handling
-			std::wstring currentText = srcTextBox->GetText();
+			std::string currentText = srcTextBox->GetText();
 			if (!currentText._Equal(oldText))
 			{
 				textChanged = true;
@@ -97,7 +97,7 @@ void UITextboxStateHandler::StartListener()
 				// Space
 				if (GetAsyncKeyState(VK_SPACE) & 1)
 				{
-					srcTextBox->AddText(L" ");
+					srcTextBox->AddText(" ");
 				}
 
 				// Key: 1
@@ -106,11 +106,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"!");
+						srcTextBox->AddText("!");
 					}
 					else
 					{
-						srcTextBox->AddText(L"1");
+						srcTextBox->AddText("1");
 					}
 				}
 				// Key: 2
@@ -119,11 +119,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"@");
+						srcTextBox->AddText("@");
 					}
 					else
 					{
-						srcTextBox->AddText(L"2");
+						srcTextBox->AddText("2");
 					}
 				}
 				// Key: 3
@@ -132,11 +132,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"#");
+						srcTextBox->AddText("#");
 					}
 					else
 					{
-						srcTextBox->AddText(L"3");
+						srcTextBox->AddText("3");
 					}
 				}
 				// Key: 4
@@ -145,11 +145,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"$");
+						srcTextBox->AddText("$");
 					}
 					else
 					{
-						srcTextBox->AddText(L"4");
+						srcTextBox->AddText("4");
 					}
 				}
 				// Key: 5
@@ -158,11 +158,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"%");
+						srcTextBox->AddText("%");
 					}
 					else
 					{
-						srcTextBox->AddText(L"5");
+						srcTextBox->AddText("5");
 					}
 				}
 				// Key: 6
@@ -171,11 +171,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"^");
+						srcTextBox->AddText("^");
 					}
 					else
 					{
-						srcTextBox->AddText(L"6");
+						srcTextBox->AddText("6");
 					}
 				}
 				// Key: 7
@@ -184,11 +184,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"&");
+						srcTextBox->AddText("&");
 					}
 					else
 					{
-						srcTextBox->AddText(L"7");
+						srcTextBox->AddText("7");
 					}
 				}
 				// Key: 8
@@ -197,11 +197,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"*");
+						srcTextBox->AddText("*");
 					}
 					else
 					{
-						srcTextBox->AddText(L"8");
+						srcTextBox->AddText("8");
 					}
 				}
 				// Key: 9
@@ -210,11 +210,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"(");
+						srcTextBox->AddText("(");
 					}
 					else
 					{
-						srcTextBox->AddText(L"9");
+						srcTextBox->AddText("9");
 					}
 				}
 				// Key: 0
@@ -223,11 +223,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L")");
+						srcTextBox->AddText(")");
 					}
 					else
 					{
-						srcTextBox->AddText(L"0");
+						srcTextBox->AddText("0");
 					}
 				}
 
@@ -237,11 +237,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"A");
+						srcTextBox->AddText("A");
 					}
 					else
 					{
-						srcTextBox->AddText(L"a");
+						srcTextBox->AddText("a");
 					}
 				}
 				// Letter B
@@ -250,11 +250,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"B");
+						srcTextBox->AddText("B");
 					}
 					else
 					{
-						srcTextBox->AddText(L"b");
+						srcTextBox->AddText("b");
 					}
 				}
 				// Letter C
@@ -263,11 +263,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"C");
+						srcTextBox->AddText("C");
 					}
 					else
 					{
-						srcTextBox->AddText(L"c");
+						srcTextBox->AddText("c");
 					}
 				}
 				// Letter D
@@ -276,11 +276,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"D");
+						srcTextBox->AddText("D");
 					}
 					else
 					{
-						srcTextBox->AddText(L"d");
+						srcTextBox->AddText("d");
 					}
 				}
 				// Letter E
@@ -289,11 +289,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"E");
+						srcTextBox->AddText("E");
 					}
 					else
 					{
-						srcTextBox->AddText(L"e");
+						srcTextBox->AddText("e");
 					}
 				}
 				// Letter F
@@ -302,11 +302,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"F");
+						srcTextBox->AddText("F");
 					}
 					else
 					{
-						srcTextBox->AddText(L"f");
+						srcTextBox->AddText("f");
 					}
 				}
 				// Letter G
@@ -315,11 +315,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"G");
+						srcTextBox->AddText("G");
 					}
 					else
 					{
-						srcTextBox->AddText(L"g");
+						srcTextBox->AddText("g");
 					}
 				}
 				// Letter H
@@ -328,11 +328,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"H");
+						srcTextBox->AddText("H");
 					}
 					else
 					{
-						srcTextBox->AddText(L"h");
+						srcTextBox->AddText("h");
 					}
 				}
 				// Letter I
@@ -341,11 +341,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"I");
+						srcTextBox->AddText("I");
 					}
 					else
 					{
-						srcTextBox->AddText(L"i");
+						srcTextBox->AddText("i");
 					}
 				}
 				// Letter J
@@ -354,11 +354,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"J");
+						srcTextBox->AddText("J");
 					}
 					else
 					{
-						srcTextBox->AddText(L"j");
+						srcTextBox->AddText("j");
 					}
 				}
 				// Letter K
@@ -367,11 +367,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"K");
+						srcTextBox->AddText("K");
 					}
 					else
 					{
-						srcTextBox->AddText(L"k");
+						srcTextBox->AddText("k");
 					}
 				}
 				// Letter L
@@ -380,11 +380,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"L");
+						srcTextBox->AddText("L");
 					}
 					else
 					{
-						srcTextBox->AddText(L"l");
+						srcTextBox->AddText("l");
 					}
 				}
 				// Letter M
@@ -393,11 +393,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"M");
+						srcTextBox->AddText("M");
 					}
 					else
 					{
-						srcTextBox->AddText(L"m");
+						srcTextBox->AddText("m");
 					}
 				}
 				// Letter N
@@ -406,11 +406,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"N");
+						srcTextBox->AddText("N");
 					}
 					else
 					{
-						srcTextBox->AddText(L"n");
+						srcTextBox->AddText("n");
 					}
 				}
 				// Letter O
@@ -419,11 +419,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"O");
+						srcTextBox->AddText("O");
 					}
 					else
 					{
-						srcTextBox->AddText(L"o");
+						srcTextBox->AddText("o");
 					}
 				}
 				// Letter P
@@ -432,11 +432,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"P");
+						srcTextBox->AddText("P");
 					}
 					else
 					{
-						srcTextBox->AddText(L"p");
+						srcTextBox->AddText("p");
 					}
 				}
 				// Letter Q
@@ -445,11 +445,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"Q");
+						srcTextBox->AddText("Q");
 					}
 					else
 					{
-						srcTextBox->AddText(L"q");
+						srcTextBox->AddText("q");
 					}
 				}
 				// Letter R
@@ -458,11 +458,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"R");
+						srcTextBox->AddText("R");
 					}
 					else
 					{
-						srcTextBox->AddText(L"r");
+						srcTextBox->AddText("r");
 					}
 				}
 				// Letter S
@@ -471,11 +471,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"S");
+						srcTextBox->AddText("S");
 					}
 					else
 					{
-						srcTextBox->AddText(L"s");
+						srcTextBox->AddText("s");
 					}
 				}
 				// Letter T
@@ -484,11 +484,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"T");
+						srcTextBox->AddText("T");
 					}
 					else
 					{
-						srcTextBox->AddText(L"t");
+						srcTextBox->AddText("t");
 					}
 				}
 				// Letter U
@@ -497,11 +497,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"U");
+						srcTextBox->AddText("U");
 					}
 					else
 					{
-						srcTextBox->AddText(L"u");
+						srcTextBox->AddText("u");
 					}
 				}
 				// Letter V
@@ -515,11 +515,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"V");
+						srcTextBox->AddText("V");
 					}
 					else
 					{
-						srcTextBox->AddText(L"v");
+						srcTextBox->AddText("v");
 					}
 				}
 				// Letter W
@@ -528,11 +528,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"W");
+						srcTextBox->AddText("W");
 					}
 					else
 					{
-						srcTextBox->AddText(L"w");
+						srcTextBox->AddText("w");
 					}
 				}
 				// Letter X
@@ -541,11 +541,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"X");
+						srcTextBox->AddText("X");
 					}
 					else
 					{
-						srcTextBox->AddText(L"x");
+						srcTextBox->AddText("x");
 					}
 				}
 				// Letter Y
@@ -554,11 +554,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"Y");
+						srcTextBox->AddText("Y");
 					}
 					else
 					{
-						srcTextBox->AddText(L"y");
+						srcTextBox->AddText("y");
 					}
 				}
 				// Letter Z
@@ -572,11 +572,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000 || (GetKeyState(0x14)) != 0)
 					{
-						srcTextBox->AddText(L"Z");
+						srcTextBox->AddText("Z");
 					}
 					else
 					{
-						srcTextBox->AddText(L"z");
+						srcTextBox->AddText("z");
 					}
 				}
 
@@ -586,11 +586,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"~");
+						srcTextBox->AddText("~");
 					}
 					else
 					{
-						srcTextBox->AddText(L"`");
+						srcTextBox->AddText("`");
 					}
 				}
 				// Key: , (<)
@@ -599,11 +599,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"<");
+						srcTextBox->AddText("<");
 					}
 					else
 					{
-						srcTextBox->AddText(L",");
+						srcTextBox->AddText(",");
 					}
 				}
 				// Key: . (>)
@@ -612,11 +612,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L">");
+						srcTextBox->AddText(">");
 					}
 					else
 					{
-						srcTextBox->AddText(L".");
+						srcTextBox->AddText(".");
 					}
 				}
 				// Key: / (?)
@@ -625,11 +625,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"?");
+						srcTextBox->AddText("?");
 					}
 					else
 					{
-						srcTextBox->AddText(L"/");
+						srcTextBox->AddText("/");
 					}
 				}
 				// Key: ; (:)
@@ -638,11 +638,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L":");
+						srcTextBox->AddText(":");
 					}
 					else
 					{
-						srcTextBox->AddText(L";");
+						srcTextBox->AddText(";");
 					}
 				}
 				// Key: ' (")
@@ -651,11 +651,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"\"");
+						srcTextBox->AddText("\"");
 					}
 					else
 					{
-						srcTextBox->AddText(L"'");
+						srcTextBox->AddText("'");
 					}
 				}
 				// Key: [ ({)
@@ -664,11 +664,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"{");
+						srcTextBox->AddText("{");
 					}
 					else
 					{
-						srcTextBox->AddText(L"[");
+						srcTextBox->AddText("[");
 					}
 				}
 				// Key: ] (})
@@ -677,11 +677,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"}");
+						srcTextBox->AddText("}");
 					}
 					else
 					{
-						srcTextBox->AddText(L"]");
+						srcTextBox->AddText("]");
 					}
 				}
 				// Key: \ (|)
@@ -690,11 +690,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"|");
+						srcTextBox->AddText("|");
 					}
 					else
 					{
-						srcTextBox->AddText(L"\\");
+						srcTextBox->AddText("\\");
 					}
 				}
 				// Key: - (_)
@@ -703,11 +703,11 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"_");
+						srcTextBox->AddText("_");
 					}
 					else
 					{
-						srcTextBox->AddText(L"-");
+						srcTextBox->AddText("-");
 					}
 				}
 				// Key: = (+)
@@ -716,18 +716,18 @@ void UITextboxStateHandler::StartListener()
 					// Check for upper/lower case
 					if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 					{
-						srcTextBox->AddText(L"+");
+						srcTextBox->AddText("+");
 					}
 					else
 					{
-						srcTextBox->AddText(L"=");
+						srcTextBox->AddText("=");
 					}
 				}
 				// Key: TAB
 				if (GetAsyncKeyState(VK_TAB) & 1)
 				{
 					// Check for upper/lower case
-					srcTextBox->AddText(L"    ");
+					srcTextBox->AddText("    ");
 				}
 
 				// Combination of CONTROL + KEY				
@@ -742,7 +742,7 @@ void UITextboxStateHandler::StartListener()
 	}
 }
 
-float UITextboxStateHandler::CalculateVisibleTextLimit(int fontSize)  // NEEDS WORK ASAP OR ELSE TEXTBOX IS GONNA BE BROKEN!!!a
+float UITextboxStateHandler::CalculateVisibleTextLimit(int fontSize)  // NEEDS WORK ASAP OR ELSE TEXTBOX IS GONNA BE BROKEN!!!
 {
 	float width = srcTextBox->GetWidth();
 	float cw = 1.0f; // Width of 1 character

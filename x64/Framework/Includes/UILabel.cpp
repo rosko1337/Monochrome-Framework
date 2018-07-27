@@ -6,20 +6,20 @@ UILabel::UILabel(UIWindow* srcWindow)
 	this->srcWindow = srcWindow;
 }
 
-UILabel::UILabel(UIWindow* srcWindow, std::wstring text)
+UILabel::UILabel(UIWindow* srcWindow, std::string text)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
 }
 
-UILabel::UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName)
+UILabel::UILabel(UIWindow* srcWindow, std::string text, std::string fontName)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
 	this->FontName = fontName;
 }
 
-UILabel::UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName, int FontSize)
+UILabel::UILabel(UIWindow* srcWindow, std::string text, std::string fontName, int FontSize)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
@@ -27,7 +27,7 @@ UILabel::UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName, 
 	this->FontSize = FontSize;
 }
 
-UILabel::UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName, int FontSize, float xPos, float yPos, float Width, float Height)
+UILabel::UILabel(UIWindow* srcWindow, std::string text, std::string fontName, int FontSize, float xPos, float yPos, float Width, float Height)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
@@ -39,7 +39,7 @@ UILabel::UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName, 
 	this->Height = Height;
 }
 
-UILabel::UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+UILabel::UILabel(UIWindow* srcWindow, std::string text, std::string fontName,
 	int FontSize, float xPos, float yPos, float Width, float Height, Color* color) {
 
 	this->srcWindow = srcWindow;
@@ -53,7 +53,7 @@ UILabel::UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
 	this->color = color;
 }
 
-UILabel::UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+UILabel::UILabel(UIWindow* srcWindow, std::string text, std::string fontName,
 	int FontSize, float xPos, float yPos, float Width, float Height, Color* color, float stroke) {
 
 	this->srcWindow = srcWindow;
@@ -68,7 +68,7 @@ UILabel::UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
 	this->Stroke = stroke;
 }
 
-UILabel::UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+UILabel::UILabel(UIWindow* srcWindow, std::string text, std::string fontName,
 	int FontSize, float xPos, float yPos, float Width, float Height, Color* color, float stroke, float margins) {
 
 	this->srcWindow = srcWindow;
@@ -97,7 +97,7 @@ void UILabel::Draw()
 	DWRITE_PARAGRAPH_ALIGNMENT paragraphAllignment;
 	MakeTextAllignment(this->TextAllignment, textAllignment, paragraphAllignment);
 
-	this->srcWindow->GetGraphics()->drawText(std::wstring(Text), FontName, FontSize, 
+	this->srcWindow->GetGraphics()->drawText(Text, FontName, FontSize,
 		xPos+Margins, yPos+Margins, Width-Margins, Height-Margins, textColor->r, textColor->g, textColor->b, textColor->a,
 		textAllignment, paragraphAllignment);
 }

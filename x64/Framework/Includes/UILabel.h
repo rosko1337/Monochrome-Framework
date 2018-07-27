@@ -10,25 +10,25 @@ class UILabel : public UIElement
 {
 public:
 	UILabel(UIWindow* srcWindow);
-	UILabel(UIWindow* srcWindow, std::wstring text);
-	UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName);
-	UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName, int FontSize);
-	UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName, int FontSize, float xPos, float yPos, float Width, float Height);
-	UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+	UILabel(UIWindow* srcWindow, std::string text);
+	UILabel(UIWindow* srcWindow, std::string text, std::string fontName);
+	UILabel(UIWindow* srcWindow, std::string text, std::string fontName, int FontSize);
+	UILabel(UIWindow* srcWindow, std::string text, std::string fontName, int FontSize, float xPos, float yPos, float Width, float Height);
+	UILabel(UIWindow* srcWindow, std::string text, std::string fontName,
 		int FontSize, float xPos, float yPos, float Width, float Height, Color* color);
 
-	UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+	UILabel(UIWindow* srcWindow, std::string text, std::string fontName,
 		int FontSize, float xPos, float yPos, float Width, float Height, Color* color, float stroke);
 
-	UILabel(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+	UILabel(UIWindow* srcWindow, std::string text, std::string fontName,
 		int FontSize, float xPos, float yPos, float Width, float Height, Color* color, float stroke, float margins);
 
 	void Draw();
 
 	// Getters
 	UIWindow* GetSourceWindow() { return this->srcWindow; }
-	std::wstring GetText() { return this->Text; }
-	std::wstring GetFontName() { return this->FontName; }
+	std::string GetText() { return this->Text; }
+	std::string GetFontName() { return this->FontName; }
 	int GetFontSize() { return this->FontSize; }
 	float GetPosX() { return this->xPos; }
 	float GetPosY() { return this->yPos; }
@@ -44,8 +44,8 @@ public:
 	
 
 	// Setters
-	void SetText(std::wstring text) { this->Text = text; }
-	void SetFontName(std::wstring fontName) { this->Text = fontName; }
+	void SetText(std::string text) { this->Text = text; }
+	void SetFontName(std::string fontName) { this->Text = fontName; }
 	void SetTextAllignment(int alligment) { this->TextAllignment = alligment; }
 	void SetFontSize(int size) { this->FontSize = size; }
 	void SetPosition(float x, float y) { this->xPos = x; this->yPos = y; }
@@ -93,8 +93,8 @@ public:
 
 private:
 	UIWindow* srcWindow;
-	std::wstring Text = std::wstring(L"Label");
-	std::wstring FontName = std::wstring(L"Arial");
+	std::string Text = std::string("Label");
+	std::string FontName = std::string("Arial");
 	int TextAllignment = TEXT_ALLIGNMENT_CENTER;
 	int FontSize = 14;
 	float xPos = 40, yPos = 60, Width = 120, Height = 40;

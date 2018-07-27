@@ -24,14 +24,14 @@ UIButton::UIButton(UIWindow* srcWindow)
 	SetMouseHoverEventHandler(Mouse_HoverOn, Mouse_HoverOff);
 }
 
-UIButton::UIButton(UIWindow* srcWindow, std::wstring text)
+UIButton::UIButton(UIWindow* srcWindow, std::string text)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
 	SetMouseHoverEventHandler(Mouse_HoverOn, Mouse_HoverOff);
 }
 
-UIButton::UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName)
+UIButton::UIButton(UIWindow* srcWindow, std::string text, std::string fontName)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
@@ -39,7 +39,7 @@ UIButton::UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName
 	SetMouseHoverEventHandler(Mouse_HoverOn, Mouse_HoverOff);
 }
 
-UIButton::UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName, int FontSize)
+UIButton::UIButton(UIWindow* srcWindow, std::string text, std::string fontName, int FontSize)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
@@ -48,7 +48,7 @@ UIButton::UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName
 	SetMouseHoverEventHandler(Mouse_HoverOn, Mouse_HoverOff);
 }
 
-UIButton::UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName, int FontSize, float xPos, float yPos, float Width, float Height)
+UIButton::UIButton(UIWindow* srcWindow, std::string text, std::string fontName, int FontSize, float xPos, float yPos, float Width, float Height)
 {
 	this->srcWindow = srcWindow;
 	this->Text = text;
@@ -61,7 +61,7 @@ UIButton::UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName
 	SetMouseHoverEventHandler(Mouse_HoverOn, Mouse_HoverOff);
 }
 
-UIButton::UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+UIButton::UIButton(UIWindow* srcWindow, std::string text, std::string fontName,
 	int FontSize, float xPos, float yPos, float Width, float Height, Color* color) {
 
 	this->srcWindow = srcWindow;
@@ -77,7 +77,7 @@ UIButton::UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName
 	SetMouseHoverEventHandler(Mouse_HoverOn, Mouse_HoverOff);
 }
 
-UIButton::UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+UIButton::UIButton(UIWindow* srcWindow, std::string text, std::string fontName,
 	int FontSize, float xPos, float yPos, float Width, float Height, Color* color, float stroke) {
 
 	this->srcWindow = srcWindow;
@@ -94,7 +94,7 @@ UIButton::UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName
 	SetMouseHoverEventHandler(Mouse_HoverOn, Mouse_HoverOff);
 }
 
-UIButton::UIButton(UIWindow* srcWindow, std::wstring text, std::wstring fontName,
+UIButton::UIButton(UIWindow* srcWindow, std::string text, std::string fontName,
 	int FontSize, float xPos, float yPos, float Width, float Height, Color* color, float stroke, float margins) {
 
 	this->srcWindow = srcWindow;
@@ -139,8 +139,8 @@ void UIButton::Draw()
 	DWRITE_TEXT_ALIGNMENT textAllignment;
 	DWRITE_PARAGRAPH_ALIGNMENT paragraphAllignment;
 	MakeTextAllignment(this->TextAllignment, textAllignment, paragraphAllignment);
-
-	this->srcWindow->GetGraphics()->drawText(std::wstring(Text), FontName, FontSize,
+	
+	this->srcWindow->GetGraphics()->drawText(Text, FontName, FontSize,
 		xPos + Margins, yPos + Margins, Width - Margins, Height - Margins, textColor->r, textColor->g, textColor->b, textColor->a,
 		textAllignment, paragraphAllignment); // text inside a button
 }

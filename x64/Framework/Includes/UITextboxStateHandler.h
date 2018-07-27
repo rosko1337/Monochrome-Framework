@@ -23,7 +23,7 @@ private:
 		HANDLE h = GetClipboardData(CF_TEXT);
 		char* clipboardData = (char*)h;
 		std::string s(clipboardData);
-		std::wstring w(&s[0], &s[s.size()]);
+		std::string w(&s[0], &s[s.size()]);
 		srcTextBox->AddText(w);
 	}
 	float CalculateVisibleTextLimit(int fontSize);
