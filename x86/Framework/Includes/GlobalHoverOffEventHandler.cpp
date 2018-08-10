@@ -18,7 +18,7 @@ void GlobalHoverOffEventHandler::StartListener()
 	while (true)
 	{
 		Sleep(10);
-		if (sender->GetVisible() && sender->GetEnabled())
+		if (sender->GetVisible() && sender->GetEnabled() && sender->GetSourceWindow()->IsActive())
 		{
 			float mouseX = Mouse::GetMousePosX(sender->GetSourceWindow());
 			float mouseY = Mouse::GetMousePosY(sender->GetSourceWindow());

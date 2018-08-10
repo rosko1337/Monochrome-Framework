@@ -18,7 +18,7 @@ void GlobalRightMouseClickEventHandler::StartListener()
 	while (true)
 	{
 		Sleep(2);
-		if (sender->GetVisible() && sender->GetEnabled())
+		if (sender->GetVisible() && sender->GetEnabled() && sender->GetSourceWindow()->IsActive())
 		{
 			if (GetAsyncKeyState(VK_RBUTTON) == 0)
 				pressed = false;

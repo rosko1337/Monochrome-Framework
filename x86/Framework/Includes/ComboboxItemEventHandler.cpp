@@ -15,7 +15,7 @@ void ComboboxItemEventHandler::StartListener()
 	while (true)
 	{
 		Sleep(2);
-		if (combo->GetEnabled() && combo->GetVisible() && combo->GetDrawItems())
+		if (combo->GetEnabled() && combo->GetVisible() && combo->GetDrawItems() && sender->GetSourceWindow()->IsActive())
 		{
 			if (mousePressed && GetAsyncKeyState(VK_LBUTTON) == 0)
 			{

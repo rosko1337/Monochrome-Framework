@@ -20,7 +20,7 @@ void GlobalWhileMouseDownEventHandler::StartListener()
 	{
 		Sleep(10);
 
-		if (sender->GetVisible() && sender->GetEnabled())
+		if (sender->GetVisible() && sender->GetEnabled() && sender->GetSourceWindow()->IsActive())
 		{
 			if (GetAsyncKeyState(VK_LBUTTON) == 0)
 			{

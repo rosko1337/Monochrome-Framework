@@ -19,7 +19,7 @@ void MouseMovedWhileDownEventHandler::StartListener()
 	while (true)
 	{
 		Sleep(2);
-		if (slider->GetVisible() && slider->GetEnabled())
+		if (slider->GetVisible() && slider->GetEnabled() && sender->GetSourceWindow()->IsActive())
 		{
 			if (GetAsyncKeyState(VK_LBUTTON) == 0)
 			{

@@ -56,6 +56,8 @@ public:
 	}
 	void SetColor(Color color) { this->color = color; }
 	void SetItems(std::vector<std::string> items) { this->Items = items; }
+	void SetSelectedItemFontSize(float size) { this->selectedItemFontSize = size; }
+	void SetItemsFontSize(float size) { this->itemsFontSize = size; }
 	void SetDrawItems(bool state) { this->drawItems = state; }
 	void SetSelectedIndex(int index) { this->SelectedIndex = index; }
 	void SetHoverIndex(int index) { this->hoverIndex = index; }
@@ -107,6 +109,8 @@ public:
 private:
 	UIWindow* srcWindow;
 	float xPos = 30, yPos = 60, Width = 160, Height = 26;
+	float selectedItemFontSize = 12;
+	float itemsFontSize = 12;
 	uint8_t normalAlpha = 255;
 	Color color = Color::White;
 	bool Visible = true;

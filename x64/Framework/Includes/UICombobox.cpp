@@ -25,6 +25,8 @@ UICombobox::UICombobox(UIWindow* srcWindow, float xPos, float yPos, float Width,
 	this->Height = Height;
 	SetMouseClickedHandler(Mouse_OnClick);
 	SetItemSelectionHandler();
+	itemsFontSize = Height - 2;
+	selectedItemFontSize = Height - 2;
 }
 
 UICombobox::UICombobox(UIWindow* srcWindow, float xPos, float yPos, float Width, float Height, Color color)
@@ -38,6 +40,8 @@ UICombobox::UICombobox(UIWindow* srcWindow, float xPos, float yPos, float Width,
 	this->normalAlpha = color.a;
 	SetMouseClickedHandler(Mouse_OnClick);
 	SetItemSelectionHandler();
+	itemsFontSize = Height - 2;
+	selectedItemFontSize = Height - 2;
 }
 
 
@@ -63,10 +67,10 @@ void UICombobox::Draw()
 	}
 
 	// "▼" | "⮛"
-	this->srcWindow->GetGraphics()->drawText(L"⮛", "Arial", 16, xPos + Width - 14.0f, yPos, 4.0f, Height - 0.6f,
+	this->srcWindow->GetGraphics()->drawText(L"▼", "Arial", 16, xPos + Width - 14.0f, yPos, 4.0f, Height - 0.6f,
 		0, 0, 0, 255, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER); // Arrow Key Down
 
-	this->srcWindow->GetGraphics()->drawText(Items.at(SelectedIndex), "Arial", Height - 10, xPos + 2.0f, yPos, Width - 14.0f, Height, 
+	this->srcWindow->GetGraphics()->drawText(Items.at(SelectedIndex), "Arial", selectedItemFontSize, xPos + 2.0f, yPos, Width - 14.0f, Height,
 		0, 0, 0, 255, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER); // Actual Text
 
 	if (this->drawItems)
@@ -98,7 +102,7 @@ void UICombobox::Draw()
 				DWRITE_PARAGRAPH_ALIGNMENT paragraphAllignment;
 				MakeTextAllignment(this->TextAllignment, textAllignment, paragraphAllignment);
 
-				this->srcWindow->GetGraphics()->drawText(Items.at(i), "Arial", Height - 10, xPos + 2.0f, y, w, Height, 
+				this->srcWindow->GetGraphics()->drawText(Items.at(i), "Arial", itemsFontSize, xPos + 2.0f, y, w, Height, 
 					textRed, textGreen, textBlue, 255, textAllignment, paragraphAllignment);
 			}
 		}

@@ -29,7 +29,7 @@ void UITextboxStateHandler::StartListener()
 		float lim = CalculateVisibleTextLimit((int)srcTextBox->GetFontSize());
 		srcTextBox->SetVisibleTextLimit((int)lim);
 		Sleep(4);
-		if (srcTextBox->GetVisible() && srcTextBox->GetEnabled())
+		if (srcTextBox->GetVisible() && srcTextBox->GetEnabled() && srcTextBox->GetSourceWindow()->IsActive())
 		{
 
 			bool textChanged = false;

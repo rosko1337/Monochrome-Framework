@@ -14,7 +14,7 @@ void MouseClickEventHandler::StartListener()
 	while (true)
 	{
 		Sleep(2);
-		if (sender->GetVisible() && sender->GetEnabled())
+		if (sender->GetVisible() && sender->GetEnabled() && sender->GetSourceWindow()->IsActive())
 		{
 			if (GetAsyncKeyState(VK_LBUTTON) == 0)
 				pressed = false;
