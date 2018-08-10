@@ -3,6 +3,7 @@
 #include "UIButton.h"
 #include "UILabel.h"
 #include "Mouse.h"
+#include <iostream>
 
 int windowNum = 0;
 int currentWindowIndex = 0;
@@ -47,7 +48,16 @@ LRESULT CALLBACK windowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		for (UIWindow* window : windows)
 		{
-			window->GetGraphics()->ResizeRenderTarget(window->GetWidth(), window->GetHeight());
+			RECT rect;
+			GetWindowRect(window->GetHWND(), &rect);
+			if (window->IsBorderless())
+			{
+				window->GetGraphics()->ResizeRenderTarget(rect.right - rect.left, rect.bottom - rect.top);
+			}
+			else
+			{
+				window->GetGraphics()->ResizeRenderTarget(rect.right - rect.left - 22, rect.bottom - rect.top - 43);
+			}
 		}
 	}
 
@@ -61,7 +71,16 @@ LRESULT CALLBACK childWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 	{
 		for (UIWindow* window : windows)
 		{
-			window->GetGraphics()->ResizeRenderTarget(window->GetWidth(), window->GetHeight());
+			RECT rect;
+			GetWindowRect(window->GetHWND(), &rect);
+			if (window->IsBorderless())
+			{
+				window->GetGraphics()->ResizeRenderTarget(rect.right - rect.left, rect.bottom - rect.top);
+			}
+			else
+			{
+				window->GetGraphics()->ResizeRenderTarget(rect.right - rect.left - 22, rect.bottom - rect.top - 43);
+			}
 		}
 	}
 
@@ -119,6 +138,9 @@ void UIWindow::mcCreateWindow(const int width, const int height, const char* win
 		return;
 	}
 
+	RECT rect;
+	GetWindowRect(this->GetHWND(), &rect);
+	this->GetGraphics()->ResizeRenderTarget(rect.right - rect.left, rect.bottom - rect.top);
 	windows.push_back(this);
 }
 
