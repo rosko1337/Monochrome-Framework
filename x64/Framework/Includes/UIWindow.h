@@ -43,7 +43,9 @@ public:
 	int GetWidth() { return this->width; }
 	int GetHeight() { return this->height; }
 	int GetWindowID() { return this->windowID; }
+
 	bool IsBorderless() { return this->borderless; }
+	bool IsFocused() { return this->ftWindow->hWnd == GetFocus(); }
 
 	void SetResizable(bool state) { this->resizable = state; }
 	void SetBackgroundColor(Color color) { this->r = color.r; this->g = color.g; this->b = color.b; }
