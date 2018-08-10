@@ -3,7 +3,6 @@
 #include "UIButton.h"
 #include "UILabel.h"
 #include "Mouse.h"
-#include <iostream>
 
 int windowNum = 0;
 int currentWindowIndex = 0;
@@ -41,8 +40,12 @@ LRESULT CALLBACK windowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			DestroyWindow(window->GetHWND());
 		}
-		PostQuitMessage(0); 
-		return 0; 
+		PostQuitMessage(0);
+		exit(0); 
+		// there is a bug which doesnt always close the window, 
+		// so it will just force exit the app when main window is closed until we find a better solution 
+		// SOWWY UwU (*crying emoji*)
+		return 0;
 	}
 	if (uMsg == WM_SIZE)
 	{
@@ -66,7 +69,17 @@ LRESULT CALLBACK windowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 LRESULT CALLBACK childWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	if (uMsg == WM_DESTROY) { return 0; }
+	if (uMsg == WM_DESTROY) 
+	{
+		for (int i = 0; i < windows.size(); i++)
+		{
+			if (windows.at(i)->GetHWND() == hwnd)
+			{
+				windows.erase(windows.begin() + (i - 1));
+			}
+		}
+		return 0; 
+	}
 	if (uMsg == WM_SIZE)
 	{
 		for (UIWindow* window : windows)
@@ -191,7 +204,6 @@ void UIWindow::Update()
 	{
 		this->Dispose();
 	}
-
 	// update cursor style
 	SetCursor(LoadCursor(NULL, Mouse::CurrentCursorStyle));
 
@@ -247,7 +259,7 @@ void UIWindow::Remove(UIElement* element)
 
 bool UIWindow::IsOpened()
 {
-	return GetMessage(&msg, 0, 0, 0);
+	return GetMessage(&msg, NULL, 0, 0);
 }
 
 void UIWindow::MovePosition(int x, int y)
