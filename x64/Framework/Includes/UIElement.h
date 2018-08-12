@@ -7,8 +7,17 @@
 #include <thread>
 
 #define TEXT_ALLIGNMENT_CENTER 1
-#define TEXT_ALLIGNMENT_LEFT 2 
-#define TEXT_ALLIGNMENT_RIGHT 3 
+#define TEXT_ALLIGNMENT_LEFT 2
+#define TEXT_ALLIGNMENT_RIGHT 3
+
+#define ToLabel(val) static_cast<UILabel*>(val)
+#define ToButton(val) static_cast<UIButton*>(val)
+#define ToCheckbox(val) static_cast<UICheckbox*>(val)
+#define ToCombobox(val) static_cast<UICombobox*>(val)
+#define ToCircularProgressBar(val) static_cast<UICircularProgressBar*>(val)
+#define ToTextbox(val) static_cast<UITextbox*>(val)
+#define ToScrollableSlotArea(val) static_cast<UIScrollableSlotArea*>(val)
+#define ToSlider(val) static_cast<UISlider*>(val)
 
 class UIElement 
 {
