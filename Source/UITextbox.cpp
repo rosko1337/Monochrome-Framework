@@ -7,6 +7,9 @@
 #include "Mouse.h"
 
 bool typingInProgress = false;
+// callback function prototype
+typedef void(*text_changed_callback_function)(UIElement*, std::string);
+text_changed_callback_function TextChangedCallbackFunctionRef = nullptr;
 
 void TextBox_ClickAway(UIElement* sender)
 {
@@ -21,6 +24,12 @@ void GetPressedKey(UIElement* sender, const char* keyPressed)
 	if (typingInProgress)
 	{
 		std::string key = std::string(keyPressed);
+		// if textbox has TextChangedEventListener, then execute the callback function
+		if (TextChangedCallbackFunctionRef != nullptr)
+		{
+			TextChangedCallbackFunctionRef(sender, key);
+		}
+
 		// parsing out unnecessary keys
 		if (key._Equal("[UP]") || key._Equal("[DOWN]") || key._Equal("[ENTER]")) return;
 
@@ -267,4 +276,9 @@ void __stdcall UITextbox::adjustVisibleStartIndex()
 			visibleStartIndex++;
 		}
 	}
+}
+
+void UITextbox::AddTextChangedEventListener(text_changed_callback_function callbackFunc)
+{
+	TextChangedCallbackFunctionRef = callbackFunc;
 }

@@ -56,7 +56,7 @@ UIScrollPanel::~UIScrollPanel()
 
 void __stdcall UIScrollPanel::Draw(Graphics* graphics)
 {
-	graphics->DrawRectangle(xPos, yPos, width, height, color.r, color.g, color.b, color.a, 0, true);
+	graphics->DrawRectangle(xPos, yPos, width, height, color.r, color.g, color.b, color.a, 0, Filled);
 
 	// Calculating the start and end indices of vector to draw elements from
 	float topSpaceFromScrollBar = scrollBarPosY - this->yPos;

@@ -2,6 +2,14 @@
 
 #include "UIElement.h"
 
+class UITextbox;
+
+// Dynamically casts IUIProgressElement to normal UIElement
+#define ToUIElement(elem) dynamic_cast<UIElement*>(elem);
+
+#define ToUITextbox(elem) static_cast<UITextbox*>(elem)
+
+
 class IUITextElement
 {
 public:

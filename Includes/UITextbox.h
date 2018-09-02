@@ -166,6 +166,12 @@ public:
 		fadein_thread.detach();
 	}
 
+	// callback function prototype
+	typedef void(*text_changed_callback_function)(UIElement*, std::string);
+
+	// Calls a callback function every time a key was pressed
+	void AddTextChangedEventListener(text_changed_callback_function callbackFunc);
+
 private:
 	void SetDefaultOptions();
 	void SetupEventListeners();

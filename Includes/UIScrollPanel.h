@@ -53,6 +53,9 @@ public:
 	// Removes element from the panel
 	void RemoveElement(UIElement* elem);
 
+	// Sets fill of the panel
+	void SetFilled(bool state) { this->Filled = state; }
+
 	// Sets width of the container
 	void SetWidth(float width)
 	{
@@ -110,6 +113,7 @@ private:
 	std::vector<UISlot*> slots;
 	float slotWidth = 180, slotHeight = 30, distanceBetweenSlots = 0;
 	float slotMarginTop = 0, slotMarginLeft = 0;
+	bool Filled = true;
 
 	// Scroll bars
 	bool shouldDrawScrollBar = false;

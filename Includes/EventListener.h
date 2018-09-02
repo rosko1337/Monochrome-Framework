@@ -2,6 +2,7 @@
 
 #include "UIElement.h"
 #include "IUIProgressElement.h"
+#include "IUITextElement.h"
 #include <thread>
 #include "Mouse.h"
 
@@ -25,6 +26,7 @@ protected:
 	// Element that send the event
 	UIElement* sender;
 	IUIProgressElement* progressElementSender;
+	IUITextElement* textElementSender;
 
 	// Callback functions
 	callback_function CallbackFunc;
