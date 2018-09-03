@@ -6,28 +6,23 @@
 #include "MouseHoverOffEventListener.h"
 #include "Mouse.h"
 
-bool typingInProgress = false;
-// callback function prototype
-typedef void(*text_changed_callback_function)(UIElement*, std::string);
-text_changed_callback_function TextChangedCallbackFunctionRef = nullptr;
-
 void TextBox_ClickAway(UIElement* sender)
 {
 	UITextbox* textbox = static_cast<UITextbox*>(sender);
-	typingInProgress = false;
+	textbox->SetActive(false);
 	textbox->ShouldDrawCursor(false);
 }
 
 void GetPressedKey(UIElement* sender, const char* keyPressed)
 {
 	UITextbox* textbox = static_cast<UITextbox*>(sender);
-	if (typingInProgress)
+	if (textbox->IsActive())
 	{
 		std::string key = std::string(keyPressed);
 		// if textbox has TextChangedEventListener, then execute the callback function
-		if (TextChangedCallbackFunctionRef != nullptr)
+		if (textbox->GetTextChangedCallbackFunction() != nullptr)
 		{
-			TextChangedCallbackFunctionRef(sender, key);
+			textbox->GetTextChangedCallbackFunction()(sender, key);
 		}
 
 		// parsing out unnecessary keys
@@ -80,7 +75,7 @@ void GetPressedKey(UIElement* sender, const char* keyPressed)
 void TextBox_OnClick(UIElement* sender)
 {
 	UITextbox* textbox = static_cast<UITextbox*>(sender);
-	typingInProgress = true;
+	textbox->SetActive(true);
 	textbox->ShouldDrawCursor(true);
 }
 
@@ -280,5 +275,5 @@ void __stdcall UITextbox::adjustVisibleStartIndex()
 
 void UITextbox::AddTextChangedEventListener(text_changed_callback_function callbackFunc)
 {
-	TextChangedCallbackFunctionRef = callbackFunc;
+	this->TextChangedCallbackFunction = callbackFunc;
 }

@@ -166,11 +166,20 @@ public:
 		fadein_thread.detach();
 	}
 
+	// Returns whether textbox is active or not
+	bool IsActive() { return this->typingInProgress; }
+
+	// Do not use if not developer of monochrome
+	void SetActive(bool state) { this->typingInProgress = state; }
+
 	// callback function prototype
 	typedef void(*text_changed_callback_function)(UIElement*, std::string);
 
 	// Calls a callback function every time a key was pressed
 	void AddTextChangedEventListener(text_changed_callback_function callbackFunc);
+
+	// Return pointer to a callback function for text change
+	text_changed_callback_function GetTextChangedCallbackFunction() { return this->TextChangedCallbackFunction; }
 
 private:
 	void SetDefaultOptions();
@@ -181,8 +190,11 @@ private:
 	bool RoundedCorners = true;
 	float roundCornerRadiusX = 4, roundCornerRadiusY = 4;
 
+	text_changed_callback_function TextChangedCallbackFunction;
+
 	/* Options Specific to UITextbox */
 	bool shouldDrawCursor = false; // draw cursor only when typing (only when textbox is active)
+	bool typingInProgress = false; // is textbox active or not
 	std::string previousText = Text;
 	int visibleStartIndex = 0;
 	int cursorIndex = 0;
