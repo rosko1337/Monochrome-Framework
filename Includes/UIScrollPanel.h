@@ -53,6 +53,9 @@ public:
 	// Removes element from the panel
 	void RemoveElement(UIElement* elem);
 
+	// Return the index of the element, -1 if element wasn't found
+	int IndexOf(UIElement* elem);
+
 	// Sets fill of the panel
 	void SetFilled(bool state) { this->Filled = state; }
 

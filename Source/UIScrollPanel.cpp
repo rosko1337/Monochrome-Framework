@@ -162,6 +162,18 @@ void UIScrollPanel::RemoveElement(UIElement* elem)
 	}
 }
 
+int UIScrollPanel::IndexOf(UIElement* elem)
+{
+	for (int i = 0; i < slots.size(); i++)
+	{
+		if (slots.at(i)->uiElement == elem)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
 // Attach scroll bar listener
 void UIScrollPanel::attachScrollBarEventHandler()
 {
