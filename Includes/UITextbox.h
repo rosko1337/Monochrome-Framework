@@ -202,6 +202,15 @@ private:
 	int __stdcall CalculateVisibleTextLimit(int fontSize);
 	std::string __stdcall getOnlyVisibleText();
 	void __stdcall adjustVisibleStartIndex();
+	void KeyboardListener();
+
+	// Manual Keyboard Listener
+	void DetectKeypress();
+	bool isKeyPressed = false;
+	const char* key = '\0';
+
+	bool CheckKey(int keyCode, const char* result, const char* resultWithShiftPressed);
+	void GetPressedKey(const char* keyPressed);
 
 	~UITextbox();
 };

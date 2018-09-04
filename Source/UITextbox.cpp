@@ -1,75 +1,17 @@
 #include "UITextbox.h"
 #include "MouseClickEventListener.h"
 #include "MouseClickAwayEventListener.h"
-#include "KeypressEventListener.h"
+#include "Keyboard.hpp"
 #include "MouseHoverOnEventListener.h"
 #include "MouseHoverOffEventListener.h"
 #include "Mouse.h"
+#include <iostream>
 
 void TextBox_ClickAway(UIElement* sender)
 {
 	UITextbox* textbox = static_cast<UITextbox*>(sender);
 	textbox->SetActive(false);
 	textbox->ShouldDrawCursor(false);
-}
-
-void GetPressedKey(UIElement* sender, const char* keyPressed)
-{
-	UITextbox* textbox = static_cast<UITextbox*>(sender);
-	if (textbox->IsActive())
-	{
-		std::string key = std::string(keyPressed);
-		// if textbox has TextChangedEventListener, then execute the callback function
-		if (textbox->GetTextChangedCallbackFunction() != nullptr)
-		{
-			textbox->GetTextChangedCallbackFunction()(sender, key);
-		}
-
-		// parsing out unnecessary keys
-		if (key._Equal("[UP]") || key._Equal("[DOWN]") || key._Equal("[ENTER]")) return;
-
-		// parsing character deletion
-		if (key._Equal("[DELETE]"))
-		{
-			textbox->RemoveCharacter();
-			return;
-		}
-
-		// parsing arrow keys to move text cursor
-		if (key._Equal("[LEFT]"))
-		{
-			textbox->ShiftCursorLeft();
-			return;
-		}
-		if (key._Equal("[RIGHT]"))
-		{
-			textbox->ShiftCursorRight();
-			return;
-		}
-
-		// parsing tab key
-		if (key._Equal("    "))
-		{
-			textbox->AppendTextAtCursorIndex(key);
-
-			// for every space, increment visible start index
-			textbox->IncrementVisibleStartIndex();
-			textbox->IncrementVisibleStartIndex();
-			textbox->IncrementVisibleStartIndex();
-
-			// for every space, increment cursor index
-			textbox->ShiftCursorRight();
-			textbox->ShiftCursorRight();
-			textbox->ShiftCursorRight();
-
-			return;
-		}
-
-		textbox->ShiftCursorRight(); // one extra possible shift just in case (error handling included in the function)
-
-		// Adding the text to the textbox
-		textbox->AppendTextAtCursorIndex(key);
-	}
 }
 
 void TextBox_OnClick(UIElement* sender)
@@ -184,10 +126,11 @@ void UITextbox::SetDefaultOptions()
 void UITextbox::SetupEventListeners()
 {
 	new MouseClickEventListener(this, TextBox_OnClick);			// when user clicks on the textbox
-	new KeypressEventListener(this, GetPressedKey);				// detects key presses
 	new MouseHoverOnEventListener(this, TextBox_HoverOn);		// changes cursor when mouse hovers over the textbox
 	new MouseHoverOffEventListener(this, TextBox_HoverOff);		// changes cursor when mouse hovers off the textbox
 	new MouseClickAwayEventListener(this, TextBox_ClickAway);	// checks if the mouse clicked outside of textbox to disable editing text and cursor showing up
+	std::thread keybd_listener(&UITextbox::KeyboardListener, this); // detects key presses
+	keybd_listener.detach();
 }
 
 UITextbox::~UITextbox()
@@ -220,7 +163,7 @@ void __stdcall UITextbox::Draw(Graphics* graphics)
 	graphics->drawText(visibleText, FontName, FontSize, fontStyle, fontWeight,
 		xPos + Margins + 4, yPos, width - Margins, height, textColor.r, textColor.g, textColor.b, textColor.a,
 		textAllignment, paragraphAllignment);
-
+	
 	// Drawing cursor
 	if (shouldDrawCursor)
 	{
@@ -267,8 +210,8 @@ void __stdcall UITextbox::adjustVisibleStartIndex()
 		// extra right shift to fix the bug
 		if (cursorIndex >= Text.size() - 1)
 		{
-			visibleStartIndex++;
-			visibleStartIndex++;
+			IncrementVisibleStartIndex();
+			IncrementVisibleStartIndex();
 		}
 	}
 }
@@ -276,4 +219,164 @@ void __stdcall UITextbox::adjustVisibleStartIndex()
 void UITextbox::AddTextChangedEventListener(text_changed_callback_function callbackFunc)
 {
 	this->TextChangedCallbackFunction = callbackFunc;
+}
+
+void UITextbox::KeyboardListener()
+{
+	while (true)
+	{
+		Sleep(2);
+		if (this == nullptr || this->GetSourceWindow() == nullptr || !this->typingInProgress) continue;
+
+		if (this->IsVisible() && this->IsEnabled() && this->GetSourceWindow()->IsActive())
+		{
+			DetectKeypress();
+			if (isKeyPressed)
+			{
+				GetPressedKey(key);
+			}
+		}
+	}
+}
+
+bool UITextbox::CheckKey(int keyCode, const char* result, const char* resultWithShiftPressed)
+{
+	if (Keyboard::IsKeyPressed(keyCode))
+	{
+		key = result;
+		if (Keyboard::IsKeyDown(MC_LSHIFT) || Keyboard::IsKeyDown(MC_RSHIFT) || (GetKeyState(MC_CAPSLOCK) & 0x0001) != 0)
+		{
+			key = resultWithShiftPressed;
+		}
+		isKeyPressed = true;
+		return true;
+	}
+	return false;
+}
+
+void UITextbox::DetectKeypress()
+{
+	isKeyPressed = false;
+
+	// Action Keys
+	if (CheckKey(MC_SPACE, " ", " ")) { return; }
+	if (CheckKey(MC_BACKSPACE, "[DELETE]", "[DELETE]")) { return; }
+	if (CheckKey(MC_ENTER, "[ENTER]", "[ENTER]")) { return; }
+	if (CheckKey(MC_TAB, "    ", "    ")) { return; }
+	if (CheckKey(MC_UP, "[UP]", "[UP]")) { return; }
+	if (CheckKey(MC_DOWN, "[DOWN]", "[DOWN]")) { return; }
+	if (CheckKey(MC_LEFT, "[LEFT]", "[LEFT]")) { return; }
+	if (CheckKey(MC_RIGHT, "[RIGHT]", "[RIGHT]")) { return; }
+
+	// Special Keys
+	if (CheckKey(MC_BACKTICK, "`", "~")) { return; }
+	if (CheckKey(MC_MINUS, "-", "_")) { return; }
+	if (CheckKey(MC_EQUALS, "=", "+")) { return; }
+	if (CheckKey(MC_SQUARE_BRACKET_RIGHT, "[", "{")) { return; }
+	if (CheckKey(MC_SQUARE_BRACKET_LEFT, "]", "}")) { return; }
+	if (CheckKey(MC_BACKSLASH, "\\", "|")) { return; }
+	if (CheckKey(MC_SEMICOLON, ";", ":")) { return; }
+	if (CheckKey(MC_TICK, "'", "\"")) { return; }
+	if (CheckKey(MC_COMMA, ",", "<")) { return; }
+	if (CheckKey(MC_PERIOD, ".", ">")) { return; }
+	if (CheckKey(MC_SLASH, "/", "?")) { return; }
+
+	// Numbers
+	if (CheckKey(MC_KEY0, "0", ")")) { return; }
+	if (CheckKey(MC_KEY1, "1", "!")) { return; }
+	if (CheckKey(MC_KEY2, "2", "@")) { return; }
+	if (CheckKey(MC_KEY3, "3", "#")) { return; }
+	if (CheckKey(MC_KEY4, "4", "$")) { return; }
+	if (CheckKey(MC_KEY5, "5", "%")) { return; }
+	if (CheckKey(MC_KEY6, "6", "^")) { return; }
+	if (CheckKey(MC_KEY7, "7", "&")) { return; }
+	if (CheckKey(MC_KEY8, "8", "*")) { return; }
+	if (CheckKey(MC_KEY9, "9", "(")) { return; }
+
+	// Letters
+	if (CheckKey(MC_KEY_A, "a", "A")) { return; }
+	if (CheckKey(MC_KEY_B, "b", "B")) { return; }
+	if (CheckKey(MC_KEY_C, "c", "C")) { return; }
+	if (CheckKey(MC_KEY_D, "d", "D")) { return; }
+	if (CheckKey(MC_KEY_E, "e", "E")) { return; }
+	if (CheckKey(MC_KEY_F, "f", "F")) { return; }
+	if (CheckKey(MC_KEY_G, "g", "G")) { return; }
+	if (CheckKey(MC_KEY_H, "h", "H")) { return; }
+	if (CheckKey(MC_KEY_I, "i", "I")) { return; }
+	if (CheckKey(MC_KEY_J, "j", "J")) { return; }
+	if (CheckKey(MC_KEY_K, "k", "K")) { return; }
+	if (CheckKey(MC_KEY_L, "l", "L")) { return; }
+	if (CheckKey(MC_KEY_M, "m", "M")) { return; }
+	if (CheckKey(MC_KEY_N, "n", "N")) { return; }
+	if (CheckKey(MC_KEY_O, "o", "O")) { return; }
+	if (CheckKey(MC_KEY_P, "p", "P")) { return; }
+	if (CheckKey(MC_KEY_Q, "q", "Q")) { return; }
+	if (CheckKey(MC_KEY_R, "r", "R")) { return; }
+	if (CheckKey(MC_KEY_S, "s", "S")) { return; }
+	if (CheckKey(MC_KEY_T, "t", "T")) { return; }
+	if (CheckKey(MC_KEY_U, "u", "U")) { return; }
+	if (CheckKey(MC_KEY_V, "v", "V")) { return; }
+	if (CheckKey(MC_KEY_W, "w", "W")) { return; }
+	if (CheckKey(MC_KEY_X, "x", "X")) { return; }
+	if (CheckKey(MC_KEY_Y, "y", "Y")) { return; }
+	if (CheckKey(MC_KEY_Z, "z", "Z")) { return; }
+}
+
+void UITextbox::GetPressedKey(const char* keyPressed)
+{
+	UITextbox* textbox = static_cast<UITextbox*>(this);
+	if (textbox->IsActive())
+	{
+		std::string key = std::string(keyPressed);
+		// if textbox has TextChangedEventListener, then execute the callback function
+		if (textbox->GetTextChangedCallbackFunction() != nullptr)
+		{
+			textbox->GetTextChangedCallbackFunction()(this, key);
+		}
+
+		// parsing out unnecessary keys
+		if (key._Equal("[UP]") || key._Equal("[DOWN]") || key._Equal("[ENTER]")) return;
+
+		// parsing character deletion
+		if (key._Equal("[DELETE]"))
+		{
+			textbox->RemoveCharacter();
+			return;
+		}
+
+		// parsing arrow keys to move text cursor
+		if (key._Equal("[LEFT]"))
+		{
+			textbox->ShiftCursorLeft();
+			return;
+		}
+		if (key._Equal("[RIGHT]"))
+		{
+			textbox->ShiftCursorRight();
+			return;
+		}
+
+		// parsing tab key
+		if (key._Equal("    "))
+		{
+			textbox->AppendTextAtCursorIndex(key);
+
+			// for every space, increment visible start index
+			textbox->IncrementVisibleStartIndex();
+			textbox->IncrementVisibleStartIndex();
+			textbox->IncrementVisibleStartIndex();
+
+			// for every space, increment cursor index
+			textbox->ShiftCursorRight();
+			textbox->ShiftCursorRight();
+			textbox->ShiftCursorRight();
+
+			return;
+		}
+
+		textbox->ShiftCursorRight(); // one extra possible shift just in case (error handling included in the function)
+
+									 // Adding the text to the textbox
+		textbox->AppendTextAtCursorIndex(key);
+	}
 }
