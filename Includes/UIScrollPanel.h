@@ -53,8 +53,21 @@ public:
 	// Removes element from the panel
 	void RemoveElement(UIElement* elem);
 
+	// Removes all elements
+	void RemoveAllElements() { for (UISlot* slot : slots) { delete slot; } slots.clear(); }
+
 	// Return the index of the element, -1 if element wasn't found
 	int IndexOf(UIElement* elem);
+
+	// Returns number of elements
+	int GetElementCount() { return this->slots.size(); }
+
+	// Returns pointer to the element at an index
+	UIElement* GetElement(int index) 
+	{
+		if (index < 0 || index > slots.size() - 1) return nullptr;
+		return this->slots.at(index)->uiElement;
+	}
 
 	// Sets fill of the panel
 	void SetFilled(bool state) { this->Filled = state; }
@@ -74,6 +87,31 @@ public:
 		this->slotHeight = (height / 10);
 		this->scrollBarHeight = height / 4;
 		this->scrollBarPosY = yPos;
+	}
+
+	// Sets x and y coordinates of the scroll panel
+	void SetPosition(float x, float y)
+	{
+		float previousScrolledDistanceY = scrollBarPosY - yPos;
+		this->xPos = x;
+		this->yPos = y;
+		this->scrollBarPosX = xPos + width - scrollBarWidth;
+		this->scrollBarPosY = yPos + previousScrolledDistanceY;
+	}
+
+	// Set X component of element’s position
+	void SetPosX(float x) 
+	{
+		this->xPos = x; 
+		this->scrollBarPosX = xPos + width - scrollBarWidth; 
+	}
+
+	// Set Y component of element’s position
+	void SetPosY(float y)
+	{ 
+		float previousScrolledDistanceY = scrollBarPosY - yPos;
+		this->yPos = y; 
+		this->scrollBarPosY = yPos + previousScrolledDistanceY;
 	}
 
 	// Sets width of the scrollbar

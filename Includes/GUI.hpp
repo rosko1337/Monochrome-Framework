@@ -12,6 +12,7 @@
 #include "UICheckbox.h"
 #include "UISlider.h"
 #include "UIScrollPanel.h"
+#include "UICombobox.h"
 
 #include "Color.h"
 #include "UIFileChooser.h"
