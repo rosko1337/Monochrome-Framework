@@ -21,9 +21,6 @@ public:
 
 	// Gets font size
 	virtual int GetFontSize() { return this->FontSize; }
-	
-	// Returns text allignment
-	virtual int GetTextAllignment() { return this->TextAllignment; }
 
 	// Get the style of the font
 	virtual DWRITE_FONT_STYLE GetFontStyle() { return this->fontStyle; }
