@@ -16,6 +16,9 @@ public:
 
 	void __stdcall Draw(Graphics* graphics);
 
+	// Returns size of the checkbox
+	float GetSize() { return this->Size; }
+
 	// Gets distance from border to the text
 	float GetMargins() { return this->Margins; }
 
@@ -38,16 +41,16 @@ public:
 	void SetMargins(float margins) { this->Margins = margins; }
 
 	// Sets size of the checkbox
-	void SetSize(float size) { this->Size = size; }
+	void SetSize(float size) { this->Size = size; this->width = size; this->height = size; }
 
 	// Sets whether checkbox is checked or not
 	void SetChecked(bool state) { this->Checked = state; }
 	
 	// Sets size of the checkbox
-	void SetWidth(float size) { this->Size = size; }
+	void SetWidth(float size) { this->Size = size; this->width = size; this->height = size; }
 
 	// Sets size of the checkbox
-	void SetHeight(float size) { this->Size = size; }
+	void SetHeight(float size) { this->Size = size; this->width = size; this->height = size; }
 
 	// Sets enabled state of the checkbox
 	void SetEnabled(bool state)
