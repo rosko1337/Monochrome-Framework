@@ -81,7 +81,8 @@ void __stdcall UICheckbox::Draw(Graphics* graphics)
 	// If checkbox is checked, draw the checkmark
 	if (Checked)
 	{
-		graphics->drawText(L"✔", "Verdana", checkmarkFontSize, FONT_STYLE_NORMAL, FONT_WEIGHT_NORMAL, xPos + 0.2f, yPos + 0.2f, Size - 0.2f, Size - 0.2f, 0, 0, 0, 255,
+		graphics->drawText(L"✔", "Verdana", checkmarkFontSize, FONT_STYLE_NORMAL, FONT_WEIGHT_NORMAL, xPos + 0.2f, yPos + 0.2f, Size - 0.2f, Size - 0.2f, 
+			checkmarkColor.r, checkmarkColor.g, checkmarkColor.b, checkmarkColor.a,
 			DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 	}
 

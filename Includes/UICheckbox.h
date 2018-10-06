@@ -34,6 +34,15 @@ public:
 	// Gets rounded corner Y radius
 	float GetRoundCornersRadiusY() { return this->roundCornerRadiusY; }
 
+	// Returns the size of the checkmark
+	int GetCheckMarkFontSize() { return this->checkmarkFontSize; }
+
+	// Returns color of the checkmark
+	Color GetCheckmarkColor() { return this->checkmarkColor; }
+
+	// Sets color of the checkmark
+	void SetCheckmarkColor(Color color) { this->checkmarkColor = color; }
+
 	// Sets the font size of the checkmark
 	void SetCheckmarkFontSize(int fontSize) { this->checkmarkFontSize = fontSize; }
 
@@ -60,11 +69,13 @@ public:
 		{
 			color.a = normalAlpha;
 			textColor.a = normalAlpha;
+			checkmarkColor.a = normalAlpha;
 		}
 		else
 		{
 			color.a = 36;
 			textColor.a = 36;
+			checkmarkColor.a = 36;
 		}
 	}
 
@@ -90,6 +101,7 @@ public:
 
 				Color newTextColor = GetTextColor();
 				newTextColor.a = currentColor.a;
+				checkmarkColor.a = currentColor.a;
 				this->SetTextColor(newTextColor);
 
 				Sleep(sleepIntervals);
@@ -129,6 +141,7 @@ public:
 
 				Color newTextColor = GetTextColor();
 				newTextColor.a = color.a;
+				checkmarkColor.a = color.a;
 				this->SetTextColor(newTextColor);
 
 				this->normalAlpha = color.a;
@@ -150,6 +163,7 @@ private:
 	bool RoundedCorners = true;
 	float roundCornerRadiusX = 4, roundCornerRadiusY = 4;
 	float checkmarkFontSize = FontSize;
+	Color checkmarkColor = Color::Black;
 
 	// Checked State
 	bool Checked = false;
