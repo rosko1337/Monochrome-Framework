@@ -162,14 +162,14 @@ void UICombobox::Draw(Graphics* graphics)
 	}
 
 	graphics->drawText(L"▼", "Arial", 16, FONT_STYLE_NORMAL, FONT_WEIGHT_NORMAL, xPos + width - 14.0f, yPos, 4.0f, height - 0.6f,
-		0, 0, 0, 255, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER); // Arrow Key Down
+		arrowColor.r, arrowColor.g, arrowColor.b, arrowColor.a, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER); // Arrow Key Down
 
 
 	if (items.size() < 1) return;
 
 	// drawing selected item text
 	graphics->drawText(items.at(SelectedIndex), FontName, FontSize, fontStyle, fontWeight, xPos + 2.0f, yPos, width - 14.0f, height,
-		0, 0, 0, 255, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER); // Actual Text)
+		textColor.r, textColor.g, textColor.b, textColor.a, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER); // Actual Text)
 
 	// drawing the scroll panel with items
 	if (shouldDrawItems)
