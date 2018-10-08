@@ -31,6 +31,7 @@ void Combobox_HoverOff(UIElement* sender)
 UICombobox::UICombobox()
 {
 	itemScrollPanel = new UIScrollPanel();
+	width = 120;
 	itemScrollPanel->SetWidth(width);
 	itemScrollPanel->SetHeight(height * 3);
 	itemScrollPanel->SetSlotHeight(height);
@@ -40,6 +41,7 @@ UICombobox::UICombobox()
 UICombobox::UICombobox(float xPos, float yPos) : UIElement(xPos, yPos)
 {
 	itemScrollPanel = new UIScrollPanel();
+	width = 120;
 	itemScrollPanel->SetWidth(width);
 	itemScrollPanel->SetHeight(height * 3);
 	itemScrollPanel->SetSlotHeight(height);
@@ -161,6 +163,9 @@ void UICombobox::Draw(Graphics* graphics)
 
 	graphics->drawText(L"▼", "Arial", 16, FONT_STYLE_NORMAL, FONT_WEIGHT_NORMAL, xPos + width - 14.0f, yPos, 4.0f, height - 0.6f,
 		0, 0, 0, 255, DWRITE_TEXT_ALIGNMENT_CENTER, DWRITE_PARAGRAPH_ALIGNMENT_CENTER); // Arrow Key Down
+
+
+	if (items.size() < 1) return;
 
 	// drawing selected item text
 	graphics->drawText(items.at(SelectedIndex), FontName, FontSize, fontStyle, fontWeight, xPos + 2.0f, yPos, width - 14.0f, height,
