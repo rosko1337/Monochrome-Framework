@@ -27,7 +27,7 @@ public:
 	void SetStroke(float stroke) { this->Stroke = stroke; }
 
 	// Sets radius of the circle in which progress arc will be shown
-	void SetRadius(float size) { this->Radius = size; UpdateArcEndPoint(); }
+	void SetRadius(float size) { this->Radius = size; this->width = size * 2; this->height = size * 2; UpdateArcEndPoint(); }
 
 	// Sets color of the progress arc
 	void SetProgressColor(Color color) { this->progressColor = color; }

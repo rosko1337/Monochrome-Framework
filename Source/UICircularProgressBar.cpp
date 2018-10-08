@@ -10,14 +10,14 @@ UICircularProgressBar::UICircularProgressBar(float xPos, float yPos) : UIElement
 	this->arcEndPointY = yPos - Radius;
 }
 
-UICircularProgressBar::UICircularProgressBar(float xPos, float yPos, float radius) : UIElement(xPos, yPos)
+UICircularProgressBar::UICircularProgressBar(float xPos, float yPos, float radius) : UIElement(xPos, yPos, radius, radius)
 {
 	this->Radius = radius;
 	this->arcEndPointX = xPos;
 	this->arcEndPointY = yPos - Radius;
 }
 
-UICircularProgressBar::UICircularProgressBar(float xPos, float yPos, float radius, float stroke) : UIElement(xPos, yPos)
+UICircularProgressBar::UICircularProgressBar(float xPos, float yPos, float radius, float stroke) : UIElement(xPos, yPos, radius, radius)
 {
 	this->Radius = radius;
 	this->Stroke = stroke;
