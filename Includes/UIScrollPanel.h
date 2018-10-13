@@ -134,7 +134,7 @@ public:
 
 	// Sets height of a single slot
 	void SetSlotHeight(float height) { this->slotHeight = height; }
-
+	
 	// Returns the distance between the first slot and the top border of the container
 	float GetSlotMarginTop() { return this->slotMarginTop; }
 

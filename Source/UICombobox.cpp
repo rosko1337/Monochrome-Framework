@@ -1,10 +1,7 @@
 ﻿#include "UICombobox.h"
 #include "UIScrollPanel.h"
 #include "UIButton.h"
-#include "MouseClickEventListener.h"
 #include "MouseClickAwayEventListener.h"
-#include "MouseHoverOnEventListener.h"
-#include "MouseHoverOffEventListener.h"
 
 void Combobox_OnClick(UIElement* sender)
 {
@@ -116,11 +113,11 @@ int UICombobox::IndexOf(std::string item)
 }
 
 void UICombobox::SetupEventListeners()
-{
-	new MouseClickEventListener(this, Combobox_OnClick);			// opens selection of items
+{		
+	AddLeftMouseClickEvent(Combobox_OnClick);						// opens selection of items
 	new MouseClickAwayEventListener(this, Combobox_OnClickAway);	// closes selection of items
-	new MouseHoverOnEventListener(this, Combobox_HoverOn);			// highlights the combobox 
-	new MouseHoverOffEventListener(this, Combobox_HoverOff);		// stops highlighting the combobox 
+	AddMouseHoverOnEvent(Combobox_HoverOn);							// highlights the combobox 
+	AddMouseHoverOffEvent(Combobox_HoverOff);						// stops highlighting the combobox 
 	std::thread itemClickThread(&UICombobox::trackClickedItems, this);
 	itemClickThread.detach();										// detects clicking on elements
 }
@@ -145,6 +142,7 @@ void UICombobox::SetSelectionOpened(bool state)
 		}
 	}
 }
+
 UICombobox::~UICombobox()
 {
 }

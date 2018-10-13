@@ -328,6 +328,9 @@ bool UIWindow::IsOpened()
 
 void UIWindow::SetView(UIView* view)
 {
+	view->DepthSort();
+	view->SetSourceWindow(this);
+
 	this->currentView = view;
 	for (UIElement* element : view->GetElements())
 	{
@@ -404,13 +407,13 @@ void UIWindow::mcCreateModernWindow(int width, int height, const char* windowNam
 	ModernWindowCloseButton->SetBorderColor(Color(0, 0, 0, 0)); // transparent (invisible border)
 	ModernWindowCloseButton->SetHoverOnColor(Color(101, 123, 131, 255));
 	ModernWindowCloseButton->SetRoundedCornersRadii(0, 0);
-	ModernWindowCloseButton->AddMouseClickEventListener(CloseWindowOperation);
+	ModernWindowCloseButton->AddLeftMouseClickEvent(CloseWindowOperation);
 	ModernWindowCloseButton->SetSourceWindow(this);
 
 	// Drag Panel
 	ModernWindowDragPanel = new UILabel(0, 0, this->GetWidth() - ModernWindowCloseButton->GetWidth(), 32, "", "Verdana", 1, Color(0, 0, 0, 0), 0);
-	ModernWindowDragPanel->AddMouseDownEventListener(WindowDragPanel_WhileMouseDown);
-	ModernWindowDragPanel->AddMouseClickEventListener(WindowDragPanel_OnClick);
+	ModernWindowDragPanel->AddMouseDownEvent(WindowDragPanel_WhileMouseDown);
+	ModernWindowDragPanel->AddLeftMouseClickEvent(WindowDragPanel_OnClick);
 	ModernWindowDragPanel->SetSourceWindow(this);
 
 	// Window Title
@@ -422,6 +425,8 @@ void UIWindow::mcCreateModernWindow(int width, int height, const char* windowNam
 
 	// Adding elements to the static view
 	this->staticView->Add(ModernWindowCloseButton);
-	this->staticView->Add(ModernWindowDragPanel);
 	this->staticView->Add(ModernWindowTitleLabel);
+	this->staticView->Add(ModernWindowDragPanel);
+	this->staticView->DepthSort();
+	this->staticView->SetSourceWindow(this);
 }

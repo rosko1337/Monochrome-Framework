@@ -1,20 +1,16 @@
 #include "UIButton.h"
-#include "MouseHoverOnEventListener.h"
-#include "MouseHoverOffEventListener.h"
-
-Color hoverOffColor(0, 0, 0, 0);
 
 void Mouse_HoverOn(UIElement* sender)
 {
 	UIButton* btn = static_cast<UIButton*>(sender);
-	hoverOffColor = btn->GetColor();
+	btn->SetHoverOffColor(btn->GetColor());
 	btn->SetColor(Color(btn->GetHoverOnColor().r, btn->GetHoverOnColor().g, btn->GetHoverOnColor().b, btn->GetColor().a));
 }
 
 void Mouse_HoverOff(UIElement* sender)
 {
 	UIButton* btn = static_cast<UIButton*>(sender);
-	btn->SetColor(hoverOffColor);
+	btn->SetColor(btn->GetHoverOffColor());
 }
 
 UIButton::UIButton()
@@ -121,8 +117,10 @@ void __stdcall UIButton::Draw(Graphics* graphics)
 
 void UIButton::SetInternalHoverEventListeners()
 {
-	new MouseHoverOnEventListener(this, Mouse_HoverOn);
-	new MouseHoverOffEventListener(this, Mouse_HoverOff);
+	//new MouseHoverOnEventListener(this, Mouse_HoverOn);
+	//new MouseHoverOffEventListener(this, Mouse_HoverOff);
+	AddMouseHoverOnEvent(Mouse_HoverOn);
+	AddMouseHoverOffEvent(Mouse_HoverOff);
 }
 
 void UIButton::EmergencySetHoverOffColor()

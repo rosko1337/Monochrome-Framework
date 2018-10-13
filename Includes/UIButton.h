@@ -55,6 +55,12 @@ public:
 	// Sets color of button when mouse hovers over it
 	void SetHoverOnColor(Color color) { this->hoverOnColor = color; }
 
+	// This function is only used in private callback events, please don't use this
+	void SetHoverOffColor(Color color) { this->hoverOffColor = color; }
+
+	// This function is only used in private callback events, please don't use this
+	Color GetHoverOffColor() { return this->hoverOffColor; }
+
 	// Sets thickness of the button if not filled
 	void SetStroke(float stroke) { this->Stroke = stroke; }
 
@@ -162,6 +168,7 @@ private:
 	void SetDefaultOptions();
 	void SetInternalHoverEventListeners();
 	Color hoverOnColor = Color::DarkGray;
+	Color hoverOffColor = color;
 	Color borderColor = Color(40, 40, 40, 255);
 	float borderStroke = 2.0f;
 	float Stroke = 1.0f;

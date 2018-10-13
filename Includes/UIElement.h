@@ -48,6 +48,11 @@ public:
 	// Get Y coordinate of the element’s position
 	virtual float GetPosY() { return this->yPos; }
 
+	// Returns layer position of the element
+	int GetDepthPositionZ() { return this->zPos; }
+
+	// Sets the layer position of the element
+	void SetDepthPositionZ(int zPos) { this->zPos = zPos; }
 
 	// Set enabled state of the element
 	virtual void SetEnabled(bool state)
@@ -83,21 +88,6 @@ public:
 	
 	// Callback function prototype
 	typedef void(*callback_function)(UIElement*);
-
-	// Listens for when mouse is down and on the element
-	virtual void AddMouseDownEventListener(callback_function callbackFunc);
-
-	// Listens for a mouse left click
-	virtual void AddMouseClickEventListener(callback_function callbackFunc);
-
-	// Listens for a mouse right click
-	virtual void AddRightMouseClickEventListener(callback_function callbackFunc);
-
-	// Listens for when the mouse first hovers over the element
-	virtual void AddHoverOnEventListener(callback_function callbackFunc);
-
-	// Listens for when the mouse hovers off the element
-	virtual void AddHoverOffEventListener(callback_function callbackFunc);
 
 	// Fades the element out over given period of time in miliseconds
 	virtual void __stdcall FadeOut(int time)
@@ -150,6 +140,36 @@ public:
 		fadein_thread.detach();
 	}
 
+	// Callback function for left mouse click event
+	virtual void AddLeftMouseClickEvent(callback_function event) { this->leftMouseClickEvents.push_back(event); }
+
+	// Returns callback functions for left mouse click event
+	virtual std::vector<callback_function>& GetLeftMouseClickEvents() { return this->leftMouseClickEvents; }
+
+	// Callback function for right mouse click event
+	virtual void AddRightMouseClickEvent(callback_function event) { this->rightMouseClickEvents.push_back(event); }
+
+	// Returns callback functions for right mouse click event
+	virtual std::vector<callback_function>& GetRightMouseClickEvents() { return this->rightMouseClickEvents; }
+
+	// Callback function for mouse hover on event
+	virtual void AddMouseHoverOnEvent(callback_function event) { this->mouseHoverOnEvents.push_back(event); }
+
+	// Returns callback functions for mouse hover on event
+	virtual std::vector<callback_function>& GetMouseHoverOnEvents() { return this->mouseHoverOnEvents; }
+
+	// Callback function for mouse hover off event
+	virtual void AddMouseHoverOffEvent(callback_function event) { this->mouseHoverOffEvents.push_back(event); }
+
+	// Returns callback functions for mouse hover off event
+	virtual std::vector<callback_function>& GetMouseHoverOffEvents() { return this->mouseHoverOffEvents; }
+
+	// Callback function for mouse down event
+	virtual void AddMouseDownEvent(callback_function event) { this->mouseDownEvents.push_back(event); }
+
+	// Returns callback functions for mouse down event
+	virtual std::vector<callback_function>& GetMouseDownEvents() { return this->mouseDownEvents; }
+
 	// Public virtual destructor
 	virtual ~UIElement() {  }
 
@@ -170,13 +190,14 @@ protected:
 	float height = 20;
 	float xPos = 20;
 	float yPos = 20;
+	int zPos = 0;
 
-	// Each element is allowed to have only one listener of each type, therefore tracking is needed
-	MouseClickEventListener* MouseClickListener;
-	MouseRightClickEventListener* RightMouseClickListener;
-	MouseDownEventListener* MouseDownListener;
-	MouseHoverOnEventListener* MouseHoverOnListener;
-	MouseHoverOffEventListener* MouseHoverOffListener;
+	// list of callback events
+	std::vector<callback_function> leftMouseClickEvents;
+	std::vector<callback_function> rightMouseClickEvents;
+	std::vector<callback_function> mouseHoverOnEvents;
+	std::vector<callback_function> mouseHoverOffEvents;
+	std::vector<callback_function> mouseDownEvents;
 
 	// Creates proper d2d1 text allignment options
 	void MakeTextAllignment(int allignment, DWRITE_TEXT_ALIGNMENT& textAllignment, DWRITE_PARAGRAPH_ALIGNMENT& paragraphAllignment)

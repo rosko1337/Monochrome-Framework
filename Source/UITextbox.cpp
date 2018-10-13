@@ -1,9 +1,6 @@
 #include "UITextbox.h"
-#include "MouseClickEventListener.h"
 #include "MouseClickAwayEventListener.h"
 #include "Keyboard.hpp"
-#include "MouseHoverOnEventListener.h"
-#include "MouseHoverOffEventListener.h"
 #include "Mouse.h"
 #include <iostream>
 
@@ -125,9 +122,9 @@ void UITextbox::SetDefaultOptions()
 
 void UITextbox::SetupEventListeners()
 {
-	new MouseClickEventListener(this, TextBox_OnClick);			// when user clicks on the textbox
-	new MouseHoverOnEventListener(this, TextBox_HoverOn);		// changes cursor when mouse hovers over the textbox
-	new MouseHoverOffEventListener(this, TextBox_HoverOff);		// changes cursor when mouse hovers off the textbox
+	AddLeftMouseClickEvent(TextBox_OnClick);			// when user clicks on the textbox
+	AddMouseHoverOnEvent(TextBox_HoverOn);				// changes cursor when mouse hovers over the textbox
+	AddMouseHoverOffEvent(TextBox_HoverOff);			// changes cursor when mouse hovers off the textbox
 	new MouseClickAwayEventListener(this, TextBox_ClickAway);	// checks if the mouse clicked outside of textbox to disable editing text and cursor showing up
 	std::thread keybd_listener(&UITextbox::KeyboardListener, this); // detects key presses
 	keybd_listener.detach();

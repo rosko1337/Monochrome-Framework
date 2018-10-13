@@ -1,5 +1,4 @@
 ﻿#include "UICheckbox.h"
-#include "MouseClickEventListener.h"
 
 void Checkbox_OnClick(UIElement* sender)
 {
@@ -62,7 +61,7 @@ UICheckbox::~UICheckbox()
 
 void UICheckbox::StartEventListeners()
 {
-	new MouseClickEventListener(this, Checkbox_OnClick);
+	AddLeftMouseClickEvent(Checkbox_OnClick);
 }
 
 void __stdcall UICheckbox::Draw(Graphics* graphics)
