@@ -1,4 +1,13 @@
 #include "EventManager.h"
+#include "UIScrollPanel.h"
+#include "UICombobox.h"
+
+template <typename T, class C>
+bool isOfType(C* obj)
+{
+	return dynamic_cast<T*>(obj) != NULL;
+}
+
 
 EventManager::EventManager(UIView* view) : view(view)
 {
@@ -21,6 +30,41 @@ bool EventManager::Intersect(UIElement* elem, POINT point)
 		return true;
 	}
 	return false;
+}
+
+std::vector<UIElement*> EventManager::GetMousePointIntersectionTargets(std::vector<UIElement*>& elements, POINT point)
+{
+	std::vector<UIElement*> targets;
+	for (UIElement* elem : elements)
+	{
+		if (!elem->IsVisible() || !elem->IsEnabled()) continue;
+		if (Intersect(elem, point)) targets.push_back(elem);
+
+		if (isOfType<UIScrollPanel>(elem))
+		{
+			for (int i = 0; i < static_cast<UIScrollPanel*>(elem)->GetElementCount(); i++)
+			{
+				if (Intersect(static_cast<UIScrollPanel*>(elem)->GetElement(i), point))
+				{
+					static_cast<UIScrollPanel*>(elem)->GetElement(i)->SetDepthPositionZ(static_cast<UIScrollPanel*>(elem)->GetDepthPositionZ() + (i + 1));
+					targets.push_back(static_cast<UIScrollPanel*>(elem)->GetElement(i));
+				}
+			}
+		}
+		else if (isOfType<UICombobox>(elem))
+		{
+			UIScrollPanel* itemScrollPanel = static_cast<UICombobox*>(elem)->GetItemScrollPanel();
+			for (int i = 0; i < itemScrollPanel->GetElementCount(); i++)
+			{
+				if (Intersect(itemScrollPanel->GetElement(i), point))
+				{
+					itemScrollPanel->GetElement(i)->SetDepthPositionZ(itemScrollPanel->GetDepthPositionZ() + (i + 1));
+					targets.push_back(itemScrollPanel->GetElement(i));
+				}
+			}
+		}
+	}
+	return targets;
 }
 
 UIElement* EventManager::GetTopMostElement(std::vector<UIElement*>& targets)
@@ -74,11 +118,7 @@ void EventManager::invokeMouseDownEventCallback(UIElement * sender)
 
 void EventManager::ParseMouseClickEvent(POINT point, MouseClickEventType eventType)
 {
-	std::vector<UIElement*> targets;
-	for (UIElement* elem : view->GetElements())
-	{
-		if (Intersect(elem, point)) targets.push_back(elem);
-	}
+	std::vector<UIElement*> targets = GetMousePointIntersectionTargets(view->GetElements(), point);
 
 	if (targets.size() == 0) return;
 
@@ -110,11 +150,7 @@ void EventManager::ParseMouseClickEvent(POINT point, MouseClickEventType eventTy
 
 void EventManager::ParseMouseMovedEvent(POINT point, UIElement*& previousActiveElement)
 {
-	std::vector<UIElement*> targets;
-	for (UIElement* elem : view->GetElements())
-	{
-		if (Intersect(elem, point)) targets.push_back(elem);
-	}
+	std::vector<UIElement*> targets = GetMousePointIntersectionTargets(view->GetElements(), point);
 
 	UIElement* targetElement = GetTopMostElement(targets);
 
@@ -140,11 +176,7 @@ void EventManager::ParseMouseMovedEvent(POINT point, UIElement*& previousActiveE
 
 void EventManager::ParseMouseDownEvent(POINT point, bool& mouseAlreadyDownOnElement, UIElement* previousActiveElement, UIElement*& targetElementOut)
 {
-	std::vector<UIElement*> targets;
-	for (UIElement* elem : view->GetElements())
-	{
-		if (Intersect(elem, point)) targets.push_back(elem);
-	}
+	std::vector<UIElement*> targets = GetMousePointIntersectionTargets(view->GetElements(), point);
 
 	UIElement* targetElement = GetTopMostElement(targets);
 	if (targetElement == previousActiveElement && targetElement != nullptr && mouseAlreadyDownOnElement)

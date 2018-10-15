@@ -29,6 +29,7 @@ private:
 	UIView* view = nullptr;
 	bool Intersect(UIElement* first, UIElement* second);
 	bool Intersect(UIElement* elem, POINT point);
+	std::vector<UIElement*> GetMousePointIntersectionTargets(std::vector<UIElement*>& elements, POINT point);
 	UIElement* GetTopMostElement(std::vector<UIElement*>& targets);
 
 	// Callback function prototype

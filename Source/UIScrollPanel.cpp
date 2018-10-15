@@ -1,6 +1,6 @@
 #include "UIScrollPanel.h"
 #include "Mouse.h"
-
+#include "UIView.h"
 
 UIScrollPanel::UIScrollPanel()
 {

@@ -2,15 +2,7 @@
 #include "EventManager.h"
 #include "Mouse.h"
 #include "UIWindow.h"
-#include "UIScrollPanel.h"
-#include "UICombobox.h"
 #include <thread>
-
-template <typename T, class C>
-bool isOfType(C* obj)
-{
-	return dynamic_cast<T*>(obj) != NULL;
-}
 
 UIView::UIView()
 {
@@ -28,13 +20,6 @@ UIView::UIView()
 void UIView::Add(UIElement* element)
 {
 	this->uiElements.push_back(element);
-	if (isOfType<UIScrollPanel>(element))
-	{
-		for (int i = 0; i < static_cast<UIScrollPanel*>(element)->GetElementCount(); i++)
-		{
-			Add(static_cast<UIScrollPanel*>(element)->GetElement(i));
-		}
-	}
 }
 
 void UIView::Remove(UIElement* element)

@@ -29,8 +29,10 @@ public:
 	// Gets rounded corner Y radius
 	float GetRoundCornersRadiusY() { return this->roundCornerRadiusY; }
 
+	// Returns the color of the drop-down arrow symbol
 	Color GetArrowColor() { return this->arrowColor; }
 
+	// Sets the color of the drop-down arrow symbol
 	void SetArrowColor(Color color) { this->arrowColor = color; }
 
 	// Sets current selected index
@@ -158,6 +160,9 @@ public:
 		});
 		fadein_thread.detach();
 	}
+
+	// Returns the address of the scroll panel containing the visual buttons for each item in the combobox
+	UIScrollPanel* GetItemScrollPanel() { return this->itemScrollPanel; }
 
 	~UICombobox();
 
