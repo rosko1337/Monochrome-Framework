@@ -13,6 +13,7 @@ class UIMenu;
 class UIView;
 class UIButton;
 class UILabel;
+class UIImage;
 
 class UIWindow
 {
@@ -123,6 +124,12 @@ public:
 	// Moves the window by specified number of pixels
 	void MovePosition(int x, int y);
 
+	// Sets background image of the window
+	void SetBackgroundImage(UIImage* img);
+
+	// Loads background image file
+	void LoadBackgroundImage(const char* imgFilePath);
+
 	// Sends a window message telling the window to close (thread safe)
 	void NotifyCloseOperation() { shouldCloseOperation = true; }
 
@@ -164,6 +171,7 @@ private:
 	UIButton* ModernWindowCloseButton = nullptr;
 	UILabel* ModernWindowTitleLabel = nullptr;
 	UILabel* ModernWindowDragPanel = nullptr;
+	UIImage* backgroundImage = nullptr;
 
 	void ResizeRenderTarget();
 };

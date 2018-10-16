@@ -9,11 +9,11 @@ public:
 	UIImage(UIWindow* srcWindow, const char* imgFilepath, float xPos, float yPos);
 	UIImage(UIWindow* srcWindow, const char* imgFilepath, float xPos, float yPos, float width, float height);
 
+	// Loads a new image file
+	void LoadImageFile(UIWindow* window, const char* imgFilepath);
+
 	// Draws the image on the screen
 	void __stdcall Draw(Graphics* graphics);
-
-	// Returns pointer to a window image is bound to
-	UIWindow* GetSourceWindow() { return this->srcWindow; }
 	
 	// Returns alpha value of the image bitmap
 	float GetImageOpacity() { return this->imageOpacity; }
@@ -29,7 +29,6 @@ public:
 
 	~UIImage();
 private:
-	UIWindow* srcWindow;
 	float imageOpacity = 1.0f;
 	ID2D1Bitmap* bitmapImage;
 };

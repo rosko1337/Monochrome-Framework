@@ -3,6 +3,7 @@
 #include "Mouse.h"
 #include "UIButton.h"
 #include "UILabel.h"
+#include "UIImage.h"
 
 int windowNum = 0;
 int currentWindowIndex = 0;
@@ -107,6 +108,16 @@ UIWindow::~UIWindow()
 	delete graphics;
 }
 
+void UIWindow::SetBackgroundImage(UIImage* img)
+{
+	this->backgroundImage = img;
+}
+
+void UIWindow::LoadBackgroundImage(const char* imgFilePath)
+{
+	this->backgroundImage = new UIImage(this, imgFilePath, 0, 0, width, height);
+}
+
 void UIWindow::mcCreateWindow(int width, int height, const char* windowName)
 {
 	this->width = width;
@@ -186,6 +197,16 @@ void UIWindow::DrawDirect2DUIContents()
 		{
 			if (staticView != nullptr)
 			{
+				// render background image if it exists
+				if (backgroundImage != nullptr)
+				{
+					backgroundImage->SetWidth(width);
+					backgroundImage->SetHeight(height);
+					backgroundImage->SetWidth(width);
+					backgroundImage->SetPosition(0, 0);
+					backgroundImage->Draw(graphics);
+				}
+
 				for (UIElement* staticElement : staticView->GetElements())
 				{
 					if (staticElement == nullptr) { this->staticView->Remove(staticElement); continue; }
@@ -215,6 +236,16 @@ void UIWindow::DrawDirect2DUIContents()
 		{
 			if (staticView != nullptr)
 			{
+				// render background image if it exists
+				if (backgroundImage != nullptr)
+				{
+					backgroundImage->SetWidth(width);
+					backgroundImage->SetHeight(height);
+					backgroundImage->SetWidth(width);
+					backgroundImage->SetPosition(0, 0);
+					backgroundImage->Draw(graphics);
+				}
+
 				for (UIElement* staticElement : staticView->GetElements())
 				{
 					if (staticElement == nullptr) { this->staticView->Remove(staticElement); continue; }
